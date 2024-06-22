@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // const datatablesSimple = document.getElementById('tablekategori');
     // new simpleDatatables.DataTable(datatablesSimple);
-    $("#tablefasility").dataTable({
+    $("#tableCorner").dataTable({
         processing: true,
         paging: true,
         searching: true,
@@ -23,6 +23,27 @@ $(document).ready(function () {
             { data: "name", orderable: true },
             {
                 data: null,
+                render: function (_row, _type, data) {
+                    return data.categories.length == 0 ? '~' : data.categories.map(item => item.name).join(', ');
+                },
+                orderable: true
+            },
+            {
+                data: null,
+                render: function (_row, _type, data) {
+                    return data.facilities.length == 0 ? '~' : data.facilities.map(item => item.name).join(', ');
+                },
+                orderable: true
+            },
+            {
+                data: null,
+                render: function (_row, _type, data) {
+                    return `<a href="${data.location}" target="_blank">${data.location}</a>`;
+                },
+                orderable: false
+            },
+            {
+                data: null,
                 render: function (_data, _type, row) {
                     return (
                         "<button type='button' data-id='" +
@@ -38,7 +59,10 @@ $(document).ready(function () {
     });
 
     function clearForm() {
+        $("#detail").val("");
+        $("#lokasi").val("");
         $("#name").val("");
+        $("#modalAdd input[type='checkbox']").prop('checked', false);
         $(".action").text("Save");
         $(".action").attr("id", "save");
         $("#modalTitleId").text("Form Add facilities");
@@ -47,6 +71,10 @@ $(document).ready(function () {
     function clearErrorMsg() {
         $('#name').removeClass('is-invalid');
         $('#error_name').text('');
+        $('#detail').removeClass('is-invalid');
+        $('#error_detail').text('');
+        $('#lokasi').removeClass('is-invalid');
+        $('#error_lokasi').text('');
     }
 
     $("#addBtn").on("click", function () {
@@ -57,12 +85,31 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#save', function () {
-        // console.log('save');
+        let checkboxCategories = document.querySelectorAll('input[data-id="categories"]:checked');
+        let checkboxfacilities = document.querySelectorAll('input[data-id="facilities"]:checked');
+        let categories = [];
+        let facilities = [];
+
+        if (checkboxfacilities.length > 0) {
+            checkboxfacilities.forEach((checkbox) => {
+                facilities.push(checkbox.value);
+            });
+        }
+        if (checkboxCategories.length > 0) {
+            checkboxCategories.forEach((checkbox) => {
+                categories.push(checkbox.value);
+            });
+        }
+
         var data = new FormData();
         data.append('name', $('#name').val());
+        data.append('categories', categories);
+        data.append('facilities', facilities);
+        data.append('location', $('#lokasi').val());
+        data.append('detail', $('#detail').val());
         $.ajax({
             type: "POST",
-            url: "/admin/facilities",
+            url: "/admin/corner",
             data: data,
             contentType: false,
             processData: false,
@@ -75,7 +122,7 @@ $(document).ready(function () {
                         title: "Success",
                         text: response.message
                     });
-                    reloadTable(tablefasility);
+                    reloadTable(tableCorner);
                     clearForm();
                     $('#modalAdd').modal('hide')
                 }
@@ -88,6 +135,14 @@ $(document).ready(function () {
                         $('#name').addClass('is-invalid');
                         $('#error_name').text(errors.responseJSON.errors.name);
                     }
+                    if (errors.responseJSON.errors.detail) {
+                        $('#detail').addClass('is-invalid');
+                        $('#error_detail').text(errors.responseJSON.errors.detail);
+                    }
+                    if (errors.responseJSON.errors.location) {
+                        $('#lokasi').addClass('is-invalid');
+                        $('#error_lokasi').text(errors.responseJSON.errors.location);
+                    }
                 }
             }
         });
@@ -96,43 +151,78 @@ $(document).ready(function () {
     // mengambil data sesuai id
     $(document).on("click", ".btnEdit", function () {
         clearErrorMsg();
+        clearForm();
         $(".action").text("Update");
         $(".action").attr("id", "update");
         $("#modalAdd").modal("show");
-        $("#modalTitleId").text("Form Update facilities");
+        $("#modalTitleId").text("Form Update Corner");
 
         $.ajax({
             type: "GET",
-            url: "/admin/facilities/" + $(this).data('id'),
+            url: "/admin/corner/" + $(this).data('id'),
             dataType: "json",
             success: function (response) {
+                console.log(response)
                 if (response.status === 200) {
                     $('#name').val(response.data.name);
+                    $('#lokasi').val(response.data.location);
+                    $('#detail').val(response.data.detail);
                     $('#id').val(response.data.id);
+                    $.each(response.data.facilities, function (indexInArray, valueOfElement) {
+                        $("#modalAdd input[type='checkbox']input[id=f" + valueOfElement.id + "]").prop('checked', true);
+                    });
+                    $.each(response.data.categories, function (indexInArray, valueOfElement) {
+                        $("#modalAdd input[type='checkbox']input[id=c" + valueOfElement.id + "]").prop('checked', true);
+                    });
                 }
             }
         });
     });
 
+    // proses update data
     $(document).on('click', '#update', function () {
+        let checkboxCategories = document.querySelectorAll('input[data-id="categories"]:checked');
+        let checkboxfacilities = document.querySelectorAll('input[data-id="facilities"]:checked');
+        let categories = [];
+        let facilities = [];
+
+        if (checkboxfacilities.length > 0) {
+            checkboxfacilities.forEach((checkbox) => {
+                facilities.push(checkbox.value);
+            });
+        }
+        if (checkboxCategories.length > 0) {
+            checkboxCategories.forEach((checkbox) => {
+                categories.push(checkbox.value);
+            });
+        }
+        console.log(categories)
+
         var data = new FormData();
-        data.append('_method', 'PUT');
         data.append('name', $('#name').val());
+        data.append('_method', 'PUT')
+        data.append('categories', categories);
+        data.append('facilities', facilities);
+        data.append('location', $('#lokasi').val());
+        data.append('detail', $('#detail').val());
         $.ajax({
             type: "POST",
-            url: "/admin/facilities/" + $('#id').val(),
+            url: "/admin/corner/" + $('#id').val(),
             data: data,
             processData: false,
             contentType: false,
             dataType: "json",
             success: function (response) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: response.message
-                });
-                $('#modalAdd').modal('hide');
-                reloadTable(tablefasility);
+                console.log(response)
+                if (response.status === 200) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: response.message
+                    });
+                    $('#modalAdd').modal('hide');
+                    reloadTable(tableCorner);
+                }
             },
             error: function (errors) {
                 if (errors.status === 422) {
@@ -140,6 +230,14 @@ $(document).ready(function () {
                     if (errors.responseJSON.errors.name) {
                         $('#name').addClass('is-invalid');
                         $('#error_name').text(errors.responseJSON.errors.name);
+                    }
+                    if (errors.responseJSON.errors.detail) {
+                        $('#detail').addClass('is-invalid');
+                        $('#error_detail').text(errors.responseJSON.errors.detail);
+                    }
+                    if (errors.responseJSON.errors.location) {
+                        $('#lokasi').addClass('is-invalid');
+                        $('#error_lokasi').text(errors.responseJSON.errors.location);
                     }
                 }
             }
@@ -160,10 +258,10 @@ $(document).ready(function () {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/facilities/" + $(this).data('id'),
+                    url: "/admin/corner/" + $(this).data('id'),
                     dataType: "json",
                     success: function (response) {
-                        reloadTable(tablefasility);
+                        reloadTable(tableCorner);
                         Swal.fire({
                             title: "Deleted!",
                             text: response.message,

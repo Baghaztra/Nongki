@@ -11,7 +11,7 @@ class UpdateCornerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateCornerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'location' => 'required',
+            'detail' => 'required'
         ];
     }
 }
