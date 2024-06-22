@@ -47,8 +47,24 @@
                             placeholder="Masukkan nama tempat" />
                         <span id="error_name" class="text-danger"></span>
                     </div>
+
+                    {{-- Input gambar --}}
                     <div class="mb-3">
-                        <label for="lokasi" class="form-label">lokasi</label>
+                        <label class="form-label" for="gambar">Media</label>
+                        <input type="file" name="gambar[]" id="gambar" class="form-control" accept=".jpg, .jpeg, .png, .mp4, .mkv" hidden multiple>
+                        <div id="preview-container">
+                            <!-- Pratinjau media yang ada -->
+                        </div>
+                        <label class="form-label" for="gambar">
+                            <div id="img-preview" class="img-thumbnail" style="width: 300px; height: 150px; display: flex; justify-content: center; align-items: center; cursor: pointer; background-color: aliceblue">
+                                <i data-feather="plus" style="width: 100px; height: 100px;"></i>
+                            </div>
+                        </label>
+                    </div>
+                    {{--  --}}
+
+                    <div class="mb-3">
+                        <label for="lokasi" class="form-label">Lokasi</label>
                         <input type="text" class="form-control" name="lokasi" id="lokasi"
                             placeholder="Masukkan url lokasi" />
                         <span id="error_lokasi" class="text-danger"></span>

@@ -273,4 +273,101 @@ $(document).ready(function () {
             }
         });
     })
+
+
+    // input gambar
+    // Fungsi untuk menampilkan pratinjau file yang dipilih
+const previewFiles = (event) => {
+    const newFiles = Array.from(event.target.files);
+    currentFiles = currentFiles.concat(newFiles);
+    updatePreview();
+    updateFileInput(currentFiles);
+};
+
+// Fungsi untuk memperbarui pratinjau gambar atau video
+const updatePreview = () => {
+    const previewContainer = document.getElementById('preview-container');
+
+    // Hapus pratinjau file yang baru ditambahkan saja (biarkan media yang ada tetap)
+    previewContainer.querySelectorAll('[data-new]').forEach(el => el.remove());
+
+    currentFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            let mediaElement;
+            const previewWrapper = document.createElement('div');
+            previewWrapper.style.position = 'relative';
+            previewWrapper.style.display = 'inline-block';
+            previewWrapper.dataset.new = true; // Menandai sebagai media baru
+
+            if (file.type.startsWith('image/')) {
+                mediaElement = document.createElement('img');
+                mediaElement.src = reader.result;
+            } else if (file.type.startsWith('video/')) {
+                mediaElement = document.createElement('video');
+                mediaElement.src = reader.result;
+                mediaElement.controls = true;
+            }
+
+            if (mediaElement) {
+                mediaElement.classList.add('img-thumbnail');
+                mediaElement.style.width = '300px';
+                mediaElement.style.display = 'block';
+
+                const removeButton = document.createElement('button');
+                removeButton.innerHTML = '&#x2715;';
+                removeButton.style.position = 'absolute';
+                removeButton.style.top = '5px';
+                removeButton.style.right = '5px';
+                removeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                removeButton.style.border = 'none';
+                removeButton.style.borderRadius = '50%';
+                removeButton.style.cursor = 'pointer';
+                removeButton.addEventListener('click', () => {
+                    currentFiles = currentFiles.filter((_, i) => i !== index);
+                    updatePreview();
+                    updateFileInput(currentFiles);
+                });
+
+                previewWrapper.appendChild(mediaElement);
+                previewWrapper.appendChild(removeButton);
+                previewContainer.appendChild(previewWrapper);
+            }
+        }
+        reader.readAsDataURL(file);
+    });
+};
+
+// Fungsi untuk memperbarui input file dengan file yang sudah diupdate
+const updateFileInput = (updatedFiles) => {
+    const dataTransfer = new DataTransfer();
+    updatedFiles.forEach(file => dataTransfer.items.add(file));
+    document.getElementById('gambar').files = dataTransfer.files;
+};
+
+// Fungsi untuk menghapus media yang sudah ada
+const removeExistingMedia = (id) => {
+    const mediaElement = document.querySelector(`[data-media-id='${id}']`);
+    if (mediaElement) {
+        mediaElement.remove();
+        // Lakukan penghapusan media di sisi server juga (implementasikan di backend)
+        fetch(`/media/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  console.log('Media deleted successfully');
+              } else {
+                  console.error('Failed to delete media');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+    }
+};
+
 });
+
