@@ -1,3 +1,71 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+header {
+    /* padding: 0.5rem 0 0.5rem 2rem; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #b19c7b;
+}
+
+.container-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    margin-left: 2rem;
+}
+
+.logo {
+    display: inline-block;
+    width: max-content;
+}
+
+.logo img {
+    width: 45px;
+}
+
+.title {
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+}
+
+.navbar {
+    margin-right: 2rem;
+}
+
+.navbar .nav-item button {
+    display: inline-block;
+    width: 200px;
+    color: white;
+    border: 1px solid white;
+    padding: 0.4rem;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.navbar .nav-item button:hover {
+    background-color: rgb(45, 45, 45);
+    border-color: rgb(45, 45, 45);
+}
+
+.nav-item label {
+    cursor: pointer;
+}
+
+/* Main */
+main {
+    width: 65%;
+    margin: 0 auto;
+    height: 800px;
+    background-color: rgb(189, 189, 189);
+}
