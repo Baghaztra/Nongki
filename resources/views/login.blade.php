@@ -126,11 +126,12 @@
 <body>
     <div class="login-container">
         <h1>Nongki - Admin</h1>
-        <form action="#" method="post">
+        <form action="/login" method="post">
+            @csrf
             <div class="input-group">
                 <i class="fas fa-user"></i>
-                <input type="text" id="username" name="username" placeholder=" " required>
-                <label for="username">Username</label>
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">Email</label>
             </div>
             <div class="input-group">
                 <i class="fas fa-lock"></i>

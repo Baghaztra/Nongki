@@ -9,32 +9,45 @@
     <link rel="stylesheet" href="css/home.css">
   </head>
   <body>
-    <header>
-        <div class="container-flex brand">
-            <div class="logo">
-                <img src="/assets/img/logo.png" alt="">
-            </div>
-            <p class="title">Nongki</p>
+    <div class="sticky-top">
+      <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+          <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+            <img class="bi me-2" width="40" height="32"></img>
+            <span class="fs-4">Double header</span>
+          </a>
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+          </form>
         </div>
-        <div class="dark-mode">
-
-        </div>
-        <nav class="container-flex navbar">
-            <div class="nav-item flex">
-                <button class="button">Sarankan tempat</button>
-            </div>
-        </nav>
-    </header>
+      </header>
+      {{-- <header>
+          <div class="container-flex brand">
+              <div class="logo">
+                  <img src="/assets/img/logo.png" alt="">
+              </div>
+              <p class="title">Nongki</p>
+          </div>
+          <div class="dark-mode">
+  
+          </div>
+          <nav class="container-flex navbar">
+              <div class="nav-item flex">
+                  <button class="button">Sarankan tempat</button>
+              </div>
+          </nav>
+      </header> --}}
+      <div class="top">
+          <div class="search">
+              <input type="search" id="search" placeholder="Temukan tempat nongki anda...">
+              <i class="fa-solid fa-search"></i>
+          </div>
+          <div class="filters">
+              <i class="fa-solid fa-filter"></i>
+          </div>
+      </div>
+    </div>
     <main class="shadow">
-        <div class="top">
-            <div class="search">
-                <input type="search" id="search" placeholder="Temukan tempat nongki anda...">
-                <i class="fa-solid fa-search"></i>
-            </div>
-            <div class="filters">
-                <i class="fa-solid fa-filter"></i>
-            </div>
-        </div>
         <div class="corners">
             @foreach($corners as $item)
               <div class="corner shadow mb-2 mt-1" data-bs-toggle="modal" data-bs-target="#details-modal"

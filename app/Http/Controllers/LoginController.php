@@ -23,7 +23,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('home.index');
+            return redirect()->intended('admin/dashboard');
         }
 
         return back()->withErrors([
@@ -31,11 +31,9 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout()
     {
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
         return redirect('/');
     }
 }

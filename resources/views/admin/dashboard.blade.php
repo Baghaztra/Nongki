@@ -12,10 +12,11 @@
             <h1 class="h2">
                 Selamat
                 {{ date('H') >= 4 && date('H') < 12 ? 'pagi' : (date('H') >= 12 && date('H') < 18 ? 'siang' : 'malam') }},
-                {{-- {{ Auth::user()->name }} --}} Admin!
+                {{ Auth::user()->name }} !
             </h1>
         </div>
         <div class="card-body">
+            <p>Saran dari pengunjung web:</p>
             <div class="table table-responsive">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover" id="tableRecomendation" width="100%"
