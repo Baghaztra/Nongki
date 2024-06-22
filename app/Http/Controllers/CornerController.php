@@ -17,7 +17,7 @@ class CornerController extends Controller
         $corners = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
         $categories = Category::latest()->get();
 
-        return view('home.home', compact('corners', 'categories'));
+        return view('home.home', ['corners' => $corners, 'categories' => $categories]);
     }
 
     // Metode lainnya tetap sama
