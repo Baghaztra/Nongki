@@ -13,7 +13,9 @@ class CornerController extends Controller
      */
     public function index()
     {
-        //
+        $corner = Corner::latest()->paginate(10);
+
+        return view("admin.corner.index", ['corner' => $corner, 'search' => request('search')]);
     }
 
     /**

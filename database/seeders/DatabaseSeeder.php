@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Corner;
 use App\Models\CornerCategories;
-use App\Models\CornerFasilities;
+use App\Models\CornerFacilities;
 use App\Models\Facility;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         Corner::factory(10)->create();
         Facility::factory(10)->create();
         Category::factory(10)->create();
-        CornerFasilities::factory(10)->create();
+        CornerFacilities::factory(10)->create();
         CornerCategories::factory(10)->create();
     }
 }
