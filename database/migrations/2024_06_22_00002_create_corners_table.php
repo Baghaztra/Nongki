@@ -15,6 +15,11 @@ return new class extends Migration {
             $table->string('name');
             $table->string('location');
             $table->text('detail');
+            $table->time('jam_buka');
+            $table->time('jam_tutup');
+            $table->json('hari_buka'); 
+            $table->integer('harga_min'); 
+            $table->integer('harga_max');
             $table->timestamps();
         });
     }

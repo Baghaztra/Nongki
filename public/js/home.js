@@ -28,21 +28,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const images = detailModal.querySelector('#images');
         const images_indicator = detailModal.querySelector('#images-indicator');
         const location = detailModal.querySelector('#location');
+        const hari = detailModal.querySelector('#hari');
+        const jamBukaTutup = detailModal.querySelector('#jam-buka-tutup');
+        const harga = detailModal.querySelector('#harga');
 
         cornerName.innerHTML = button.getAttribute('data-name');
         detail.innerHTML = button.getAttribute('data-detail');
         location.setAttribute('href', button.getAttribute('data-location'));
-        
 
         // Bikin gambar
         const objectGambar = JSON.parse(button.getAttribute('data-images'));
-        
+
         images.innerHTML = '';
         images_indicator.innerHTML = '';
 
         objectGambar.forEach((item, index) => {
-            // console.log(item);
-            
             const carouselItem = document.createElement('div');
             carouselItem.classList.add('carousel-item');
             if (index === 0) {
@@ -70,32 +70,46 @@ document.addEventListener('DOMContentLoaded', (event) => {
             images_indicator.appendChild(indicator);
         });
 
-        // bikin kategori
+        // Bikin kategori
         const objectKategori = JSON.parse(button.getAttribute('data-categories'));
-        categories.innerHTML='';
+        categories.innerHTML = '';
         objectKategori.forEach(item => {
-          // console.log(item);
-          const list = document.createElement('li');
-          list.innerHTML=item.name;
-          categories.appendChild(list);
+            const list = document.createElement('li');
+            list.innerHTML = item.name;
+            categories.appendChild(list);
         });
 
-        // bikin kategori
+        // Bikin fasilitas
         const objectFasilitas = JSON.parse(button.getAttribute('data-facilities'));
-        facilities.innerHTML='';
+        facilities.innerHTML = '';
         objectFasilitas.forEach(item => {
-          // console.log(item);
-          const list = document.createElement('li');
-          list.innerHTML=item.name;
-          facilities.appendChild(list);
+            const list = document.createElement('li');
+            list.innerHTML = item.name;
+            facilities.appendChild(list);
         });
 
-        
-        // harga.innerHTML= parseFloat(button.getAttribute('data-f')).toLocaleString('id-ID', {
-        //     style: 'currency',
-        //     currency: 'IDR',
-        //     minimumFractionDigits: 2
-        // });
+        // Tampilkan hari buka
+        const objectHari = JSON.parse(button.getAttribute('data-buka'));
+        const urutanHari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+        hari.innerHTML = '';
+        urutanHari.forEach((namaHari, index) => {
+            const element = document.createElement('span');
+            element.textContent = namaHari;
+            if (index < urutanHari.length - 1) {
+                element.textContent += ', ';
+            }
+            if (objectHari.includes(namaHari)) {
+                element.style.color = 'red';
+            }
+            hari.appendChild(element);
+        });
 
+        // Tampilkan jam buka-tutup
+        jamBukaTutup.innerHTML = '';
+        jamBukaTutup.textContent = `Jam buka: ${button.getAttribute('data-jam-buka')} - Jam tutup: ${button.getAttribute('data-jam-tutup')}`;
+
+        // Tampilkan rentang harga
+        harga.innerHTML = '';
+        harga.textContent = `Rp${parseFloat(button.getAttribute('data-harga-min')).toLocaleString('id-ID')} - Rp${parseFloat(button.getAttribute('data-harga-max')).toLocaleString('id-ID')}`;
     });
 });

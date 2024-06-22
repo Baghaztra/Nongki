@@ -10,6 +10,10 @@ class Corner extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'hari_buka' => 'array',
+    ];
+    
     public function facilities()
     {
         return $this->belongsToMany(Facility::class, 'corner_facilities', 'corner_id', 'facility_id');

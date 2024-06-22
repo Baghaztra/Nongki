@@ -43,7 +43,12 @@
                   data-detail="{{ $item->detail }}"
                   data-images="{{ $item->images }}"
                   data-categories="{{ $item->categories }}"
-                  data-facilities="{{ $item->facilities }}">
+                  data-facilities="{{ $item->facilities }}"
+                  data-harga-min="{{ $item->harga_min }}"
+                  data-harga-max="{{ $item->harga_max }}"
+                  data-jam-buka="{{ $item->jam_buka }}"
+                  data-jam-tutup="{{ $item->jam_tutup }}"
+                  data-buka="{{ json_encode($item->hari_buka) }}">
                 <h2 class="name">{{ $item->name }}</h2>
                 <p class="categories">
                   <i class="category">{{ $item->categories->pluck('name')->implode(', ') }}</i>
@@ -61,9 +66,6 @@
                             @endphp
                         </div>
                     </div>
-                    {{-- <a href="{{ $item->location }}" class="right">
-                        <button type="button">View</button>
-                    </a> --}}
                 </div>
                 <div class="description">
                     <div class="detail flex flex-row">
@@ -73,11 +75,9 @@
                         <div class="paragraph">{{ substr($item->detail, 0, 100) }}{!! strlen($item->detail) > 100 ? '<span>...</span>' : '' !!} </div>
                     </div>
                     <p class="status"><span class="icons"><i class="fa-solid fa-clock"></i></span> Tutup pukul 23.00</p>
-                    {{-- <ul class="others">
-                        <li class="other">Menu</li>
-                        <li class="other">Service</li>
-                        <li class="other">Contact</li>
-                    </ul> --}}
+                    <p class="harga"><span class="icons"><i class="fa-solid fa-clock"></i></span>
+                      Rp{{ number_format($item->harga_min, 0, ',', '.') }} - Rp{{ number_format($item->harga_max, 0, ',', '.') }}
+                    </p>
                 </div>
               </div>
             @endforeach
@@ -116,6 +116,12 @@
                     <ul id="facilities" class="list-unstyled text-small"></ul>
                   </div>
                 </div>
+                <strong>Jadwal</strong>
+                <div id="hari" class="mb-3"></div>
+                <div id="jam-buka-tutup" class="mb-3"></div>
+
+                <strong>Rentang harga</strong>
+                <div id="harga" class="mb-3"></div>
                 <a id="location" href="" target="_blank">Lihat lokasi</a>
               </div>
           </div>
