@@ -37,17 +37,37 @@ $(document).ready(function () {
         $('#name').val('');
     }
 
+    function clearErrorMsg() {
+        $('#name').removeClass('is-invalid');
+        $('#error_name').text('');
+    }
+
     $('#addBtn').on('click', function () {
         $('#modalAdd').modal('show');
         if ($('.action').attr('id') == 'update') {
             clearForm();
+            clearErrorMsg();
         }
     });
 
+    // click edit btn
     $(document).on('click', '.btnEdit', function () {
         $('.action').attr('id', 'update');
         $('.action').text('Update');
         $('#modalAdd').modal('show');
+        clearErrorMsg();
+
+        $.ajax({
+            type: "GET",
+            url: "/admin/categories/" + $(this).data('id'),
+            dataType: "json",
+            success: function (response) {
+                if (response.status == 200) {
+                    $('#name').val(response.data.name);
+                    $('#id').val(response.data.id);
+                }
+            }
+        });
     });
 
     $(document).on('click', '#save', function () {
@@ -75,12 +95,79 @@ $(document).ready(function () {
                 }
             },
             error: function (errors) {
-                console.log(errors)
+                if (errors.status === 422) {
+                    // console.log(errors);
+                    clearErrorMsg();
+                    if (errors.responseJSON.errors.name) {
+                        $('#name').addClass('is-invalid');
+                        $('#error_name').text(errors.responseJSON.errors.name);
+                    }
+                }
             }
         });
     });
 
+    // menangani proses update data
     $(document).on('click', '#update', function () {
-        console.log('update');
+        var data = new FormData();
+        data.append('_method', 'PUT');
+        data.append('name', $('#name').val());
+        $.ajax({
+            type: "POST",
+            url: "/admin/categories/" + $('#id').val(),
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: response.message
+                });
+                $('#modalAdd').modal('hide');
+                reloadTable(tablekategori);
+            },
+            error: function (errors) {
+                if (errors.status === 422) {
+                    clearErrorMsg();
+                    if (errors.responseJSON.errors.name) {
+                        $('#name').addClass('is-invalid');
+                        $('#error_name').text(errors.responseJSON.errors.name);
+                    }
+                }
+            }
+        });
     });
+
+    // menangani proses delete data
+    $(document).on('click', '.btnDelete', function () {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "/admin/categories/" + $(this).data('id'),
+                    dataType: "json",
+                    success: function (response) {
+                        reloadTable(tablekategori);
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: response.message,
+                            icon: "success"
+                        });
+                    },
+                    error: function (errors) { console.log(errors) }
+                });
+            }
+        });
+    })
+
 });

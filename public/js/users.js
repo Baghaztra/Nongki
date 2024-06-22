@@ -40,6 +40,7 @@ $(document).ready(function () {
 
     function clearForm() {
         $("#name").val("");
+        $("#email").val("");
         $(".action").text("Save");
         $(".action").attr("id", "save");
         $("#modalTitleId").text("Form Add users");
@@ -83,7 +84,7 @@ $(document).ready(function () {
             url: "/admin/users/" + $(this).data('id'),
             dataType: "json",
             success: function (response) {
-                if(response.status === 200){
+                if (response.status === 200) {
                     console.log(response);
                     $('#name').val(response.data.name);
                     $('#email').val(response.data.email);

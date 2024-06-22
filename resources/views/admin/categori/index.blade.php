@@ -43,9 +43,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
+                        <input type="hidden" id="id" style="display: none">
                         <label for="" class="form-label">Name</label>
                         <input type="text" class="form-control" name="name" id="name"
                             placeholder="type a categories" />
+                        <span class="text-danger" id="error_name"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
