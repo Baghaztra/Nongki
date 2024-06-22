@@ -13,7 +13,7 @@ class FacilityController extends Controller
      */
     public function index()
     {
-        return view("admin.corner.index");
+        return view("admin.facilities.index");
     }
 
     public function getGetAllData()
@@ -46,7 +46,10 @@ class FacilityController extends Controller
      */
     public function show(Facility $facility)
     {
-        //
+        return response()->json([
+            'status' => 200,
+            'data' => $facility
+        ]);
     }
 
     /**
