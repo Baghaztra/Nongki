@@ -6,6 +6,7 @@ use App\Models\Corner;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Facility;
 
 class FECornerController extends Controller
 {
@@ -16,8 +17,9 @@ class FECornerController extends Controller
     {
         $corners = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
         $categories = Category::latest()->get();
+        $facilities = Facility::latest()->get();
 
-        return view('home.index', ['corners'=>$corners]);
+        return view('home.index', ['corners'=>$corners, 'categories'=>$categories, 'facilities'=>$facilities]);
     }
 
     /**

@@ -23,11 +23,33 @@
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
                     <input type="search" class="form-control" placeholder="Temukan tempat nongki anda..."
                         aria-label="Search">
+                        <div class="row">
+                            <div class="col-6 categories">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Categories
+                                </button>
+                                <ul class="dropdown-menu">
+                                @foreach ($categories as $item)
+                                    <li style="display: flex;"><input type="checkbox" name="categories[]" value="{{ $item->id }}" class="mx-2">
+                                        <label class="dropdown-item">{{ $item->name }}</label>
+                                    </li>
+                                @endforeach
+                                </ul>
+                            </div>
+                            <div class="col-6 facilities">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Facilities
+                                </button>
+                                <ul class="dropdown-menu">
+                                @foreach ($facilities as $item)
+                                    <li style="display: flex;"><input type="checkbox" name="facilities[]" value="{{ $item->id }}" class="mx-2">
+                                        <label class="dropdown-item">{{ $item->name }}</label>
+                                    </li>
+                                @endforeach
+                                </ul>
+                            </div>
+                        </div>
                 </form>
-                <div class="nav-item flex">
-                    <button type="button" class="btn btn-sm btn-transparent text-warning"><i
-                            class="fas fa-lightbulb"></i></button>
-                </div>
             </div>
         </header>
         {{-- <header>
@@ -79,12 +101,7 @@
                                 <i class="fa-solid fa-earth"></i>
                                 @php
                                     $cities = [
-                                        'New York',
-                                        'Los Angeles',
-                                        'Chicago',
-                                        'Houston',
-                                        'Phoenix',
-                                        'Jeruk Manis',
+                                        'Padang',
                                     ];
                                     echo $cities[array_rand($cities)];
                                 @endphp
@@ -99,8 +116,8 @@
                             <div class="paragraph">{{ substr($item->detail, 0, 100) }}{!! strlen($item->detail) > 100 ? '<span>...</span>' : '' !!} </div>
                         </div>
                         <p class="status"><span class="icons"><i class="fa-solid fa-clock"></i></span> Tutup pukul
-                            23.00</p>
-                        <p class="harga"><span class="icons"><i class="fa-solid fa-clock"></i></span>
+                            {{ $item->jam_tutup }}</p>
+                        <p class="harga"><span class="icons"><i class="fa-solid fa-hand-holding-dollar"></i></span> Rentang harga
                             Rp{{ number_format($item->harga_min, 0, ',', '.') }} -
                             Rp{{ number_format($item->harga_max, 0, ',', '.') }}
                         </p>
