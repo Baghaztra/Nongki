@@ -17,7 +17,7 @@
         <div class="card-body">
             <div class="table table-responsive">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover" id="tablekategori" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped table-hover" id="tableusers" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -50,7 +50,17 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" name="name" id="name"
-                            placeholder="type a facilities" />
+                            placeholder="your name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email"
+                            placeholder="xxx@example.com" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="fill in just if you wanna change" />
                     </div>
                 </div>
                 <div class="modal-footer">

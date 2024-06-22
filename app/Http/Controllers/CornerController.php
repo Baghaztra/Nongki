@@ -39,7 +39,10 @@ class CornerController extends Controller
      */
     public function show(Corner $corner)
     {
-        //
+        return response()->json([
+            'status' => 200,
+            'data' => $corner
+        ]);
     }
 
     /**
