@@ -10,18 +10,18 @@ class Corner extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function fasiliti()
+    public function facilities()
     {
-        return $this->hasMany(Facility::class, 'facilitie_id', 'id');
+        return $this->belongsToMany(Facility::class, 'corner_facilities', 'corner_id', 'facility_id');
     }
-
-    public function categori()
+    
+    public function categories()
     {
-        return $this->belongsTo(Category::class, 'categorie_id', 'id');
+        return $this->belongsToMany(Category::class, 'corner_categories', 'corner_id', 'category_id');
     }
 
     public function image()
     {
-        return $this->belongsTo(Image::class, 'img_id', 'id');
+        return $this->hasMany(Image::class, 'img_id', 'id');
     }
 }

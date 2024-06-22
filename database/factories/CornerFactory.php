@@ -17,7 +17,9 @@ class CornerFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word(2),
+            'location' => fake()->sentence(),
+            'detail' => fake()->paragraph(),
         ];
     }
 }
