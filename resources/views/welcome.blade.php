@@ -30,13 +30,6 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-custom">Login as Admin</button>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
     <!-- Header-->
@@ -51,7 +44,7 @@
                 <hr>
                 <div class="col-lg-8 mx-auto">
                     <p class="text-faded mb-5">"Your Guide to the Best Discussion Spaces."</p>
-                    <button type="button" class="btn btn-xl">Telusuri</button>
+                    <button href="/home" type="button" class="btn btn-xl">Search</button>
                 </div>
             </div>
         </div>
@@ -96,7 +89,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col text-center">
-                    <small class="text-muted">Hak Cipta &copy; Pojok Diskusi 2024</small>
+                    <small class="text-muted">Copy Right &copy; Pojok Diskusi 2024</small>
                 </div>
             </div>
             <div class="row mt-2">

@@ -16,9 +16,7 @@
     </header>
     <main>
         <div class="container bg-slate-400">
-            @foreach ($corners as $corner)
-                
-            @endforeach
+
         </div>
     </main>
 
