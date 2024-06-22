@@ -24,23 +24,27 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (_row, _type, data) {
-                    return data.categories.length == 0 ? '~' : data.categories.map(item => item.name).join(', ');
+                    return data.categories.length == 0
+                        ? "~"
+                        : data.categories.map((item) => item.name).join(", ");
                 },
-                orderable: true
+                orderable: true,
             },
             {
                 data: null,
                 render: function (_row, _type, data) {
-                    return data.facilities.length == 0 ? '~' : data.facilities.map(item => item.name).join(', ');
+                    return data.facilities.length == 0
+                        ? "~"
+                        : data.facilities.map((item) => item.name).join(", ");
                 },
-                orderable: true
+                orderable: true,
             },
             {
                 data: null,
                 render: function (_row, _type, data) {
                     return `<a href="${data.location}" target="_blank">${data.location}</a>`;
                 },
-                orderable: false
+                orderable: false,
             },
             {
                 data: null,
@@ -62,19 +66,19 @@ $(document).ready(function () {
         $("#detail").val("");
         $("#lokasi").val("");
         $("#name").val("");
-        $("#modalAdd input[type='checkbox']").prop('checked', false);
+        $("#modalAdd input[type='checkbox']").prop("checked", false);
         $(".action").text("Save");
         $(".action").attr("id", "save");
         $("#modalTitleId").text("Form Add facilities");
     }
 
     function clearErrorMsg() {
-        $('#name').removeClass('is-invalid');
-        $('#error_name').text('');
-        $('#detail').removeClass('is-invalid');
-        $('#error_detail').text('');
-        $('#lokasi').removeClass('is-invalid');
-        $('#error_lokasi').text('');
+        $("#name").removeClass("is-invalid");
+        $("#error_name").text("");
+        $("#detail").removeClass("is-invalid");
+        $("#error_detail").text("");
+        $("#lokasi").removeClass("is-invalid");
+        $("#error_lokasi").text("");
     }
 
     $("#addBtn").on("click", function () {
@@ -84,9 +88,13 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', '#save', function () {
-        let checkboxCategories = document.querySelectorAll('input[data-id="categories"]:checked');
-        let checkboxfacilities = document.querySelectorAll('input[data-id="facilities"]:checked');
+    $(document).on("click", "#save", function () {
+        let checkboxCategories = document.querySelectorAll(
+            'input[data-id="categories"]:checked'
+        );
+        let checkboxfacilities = document.querySelectorAll(
+            'input[data-id="facilities"]:checked'
+        );
         let categories = [];
         let facilities = [];
 
@@ -102,11 +110,11 @@ $(document).ready(function () {
         }
 
         var data = new FormData();
-        data.append('name', $('#name').val());
-        data.append('categories', categories);
-        data.append('facilities', facilities);
-        data.append('location', $('#lokasi').val());
-        data.append('detail', $('#detail').val());
+        data.append("name", $("#name").val());
+        data.append("categories", categories);
+        data.append("facilities", facilities);
+        data.append("location", $("#lokasi").val());
+        data.append("detail", $("#detail").val());
         $.ajax({
             type: "POST",
             url: "/admin/corner",
@@ -115,16 +123,16 @@ $(document).ready(function () {
             processData: false,
             dataType: "json",
             success: function (response) {
-                console.log(response)
+                console.log(response);
                 if (response.status === 200) {
                     Swal.fire({
                         icon: "success",
                         title: "Success",
-                        text: response.message
+                        text: response.message,
                     });
                     reloadTable(tableCorner);
                     clearForm();
-                    $('#modalAdd').modal('hide')
+                    $("#modalAdd").modal("hide");
                 }
             },
             error: function (errors) {
@@ -132,19 +140,23 @@ $(document).ready(function () {
                     console.log(errors.responseJSON.errors.name);
                     clearErrorMsg();
                     if (errors.responseJSON.errors.name) {
-                        $('#name').addClass('is-invalid');
-                        $('#error_name').text(errors.responseJSON.errors.name);
+                        $("#name").addClass("is-invalid");
+                        $("#error_name").text(errors.responseJSON.errors.name);
                     }
                     if (errors.responseJSON.errors.detail) {
-                        $('#detail').addClass('is-invalid');
-                        $('#error_detail').text(errors.responseJSON.errors.detail);
+                        $("#detail").addClass("is-invalid");
+                        $("#error_detail").text(
+                            errors.responseJSON.errors.detail
+                        );
                     }
                     if (errors.responseJSON.errors.location) {
-                        $('#lokasi').addClass('is-invalid');
-                        $('#error_lokasi').text(errors.responseJSON.errors.location);
+                        $("#lokasi").addClass("is-invalid");
+                        $("#error_lokasi").text(
+                            errors.responseJSON.errors.location
+                        );
                     }
                 }
-            }
+            },
         });
     });
 
@@ -157,7 +169,6 @@ $(document).ready(function () {
         // $(".action").attr("id", "update");
         // $("#modalAdd").modal("show");
         // $("#modalTitleId").text("Form Update Corner");
-
         // $.ajax({
         //     type: "GET",
         //     url: "/admin/corner/" + $(this).data('id'),
@@ -178,12 +189,51 @@ $(document).ready(function () {
         //         }
         //     }
         // });
+
+        $.ajax({
+            type: "GET",
+            url: "/admin/corner/" + $(this).data("id"),
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.status === 200) {
+                    $("#name").val(response.data.name);
+                    $("#lokasi").val(response.data.location);
+                    $("#detail").val(response.data.detail);
+                    $("#id").val(response.data.id);
+                    $.each(
+                        response.data.facilities,
+                        function (indexInArray, valueOfElement) {
+                            $(
+                                "#modalAdd input[type='checkbox']input[id=f" +
+                                    valueOfElement.id +
+                                    "]"
+                            ).prop("checked", true);
+                        }
+                    );
+                    $.each(
+                        response.data.categories,
+                        function (indexInArray, valueOfElement) {
+                            $(
+                                "#modalAdd input[type='checkbox']input[id=c" +
+                                    valueOfElement.id +
+                                    "]"
+                            ).prop("checked", true);
+                        }
+                    );
+                }
+            },
+        });
     });
 
     // proses update data
-    $(document).on('click', '#update', function () {
-        let checkboxCategories = document.querySelectorAll('input[data-id="categories"]:checked');
-        let checkboxfacilities = document.querySelectorAll('input[data-id="facilities"]:checked');
+    $(document).on("click", "#update", function () {
+        let checkboxCategories = document.querySelectorAll(
+            'input[data-id="categories"]:checked'
+        );
+        let checkboxfacilities = document.querySelectorAll(
+            'input[data-id="facilities"]:checked'
+        );
         let categories = [];
         let facilities = [];
 
@@ -197,31 +247,31 @@ $(document).ready(function () {
                 categories.push(checkbox.value);
             });
         }
-        console.log(categories)
+        console.log(categories);
 
         var data = new FormData();
-        data.append('name', $('#name').val());
-        data.append('_method', 'PUT')
-        data.append('categories', categories);
-        data.append('facilities', facilities);
-        data.append('location', $('#lokasi').val());
-        data.append('detail', $('#detail').val());
+        data.append("name", $("#name").val());
+        data.append("_method", "PUT");
+        data.append("categories", categories);
+        data.append("facilities", facilities);
+        data.append("location", $("#lokasi").val());
+        data.append("detail", $("#detail").val());
         $.ajax({
             type: "POST",
-            url: "/admin/corner/" + $('#id').val(),
+            url: "/admin/corner/" + $("#id").val(),
             data: data,
             processData: false,
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log(response)
+                console.log(response);
                 if (response.status === 200) {
                     Swal.fire({
                         icon: "success",
                         title: "Success",
-                        text: response.message
+                        text: response.message,
                     });
-                    $('#modalAdd').modal('hide');
+                    $("#modalAdd").modal("hide");
                     reloadTable(tableCorner);
                 }
             },
@@ -229,24 +279,28 @@ $(document).ready(function () {
                 if (errors.status === 422) {
                     clearErrorMsg();
                     if (errors.responseJSON.errors.name) {
-                        $('#name').addClass('is-invalid');
-                        $('#error_name').text(errors.responseJSON.errors.name);
+                        $("#name").addClass("is-invalid");
+                        $("#error_name").text(errors.responseJSON.errors.name);
                     }
                     if (errors.responseJSON.errors.detail) {
-                        $('#detail').addClass('is-invalid');
-                        $('#error_detail').text(errors.responseJSON.errors.detail);
+                        $("#detail").addClass("is-invalid");
+                        $("#error_detail").text(
+                            errors.responseJSON.errors.detail
+                        );
                     }
                     if (errors.responseJSON.errors.location) {
-                        $('#lokasi').addClass('is-invalid');
-                        $('#error_lokasi').text(errors.responseJSON.errors.location);
+                        $("#lokasi").addClass("is-invalid");
+                        $("#error_lokasi").text(
+                            errors.responseJSON.errors.location
+                        );
                     }
                 }
-            }
+            },
         });
     });
 
     // menangani proses delete data
-    $(document).on('click', '.btnDelete', function () {
+    $(document).on("click", ".btnDelete", function () {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -254,25 +308,26 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/corner/" + $(this).data('id'),
+                    url: "/admin/corner/" + $(this).data("id"),
                     dataType: "json",
                     success: function (response) {
                         reloadTable(tableCorner);
                         Swal.fire({
                             title: "Deleted!",
                             text: response.message,
-                            icon: "success"
+                            icon: "success",
                         });
                     },
-                    error: function (errors) { console.log(errors) }
+                    error: function (errors) {
+                        console.log(errors);
+                    },
                 });
             }
         });
     })
 });
-
