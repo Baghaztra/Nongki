@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateCornerRequest;
 use App\Models\CornerCategories;
 use App\Models\CornerFacilities;
 use App\Models\Facility;
+use App\Models\Image;
 
 class CornerController extends Controller
 {
@@ -37,7 +38,10 @@ class CornerController extends Controller
      */
     public function create()
     {
-        //
+        $corner = Corner::all();
+        $facilities = Facility::all();
+        $categories = Category::all();
+        return view('admin.corner.create', ['corner'=>$corner, 'facilities'=>$facilities, 'categories'=>$categories]);
     }
 
     /**
@@ -45,15 +49,20 @@ class CornerController extends Controller
      */
     public function store(StoreCornerRequest $request)
     {
-        Corner::create([
+        $corner = Corner::create([
             'location' => $request->location,
             'name' => $request->name,
-            'detail' => $request->detail
+            'detail' => $request->detail,
+            'jam_buka' => $request->jam_buka,
+            'jam_tutup' => $request->jam_tutup,
+            'hari_buka' => $request->days,
+            'harga_min' => $request->harga_min,
+            'harga_max' => $request->harga_max,
         ]);
 
         if (!empty($request->facilities)) {
             $cornerID = Corner::latest()->first();
-            $arrayFacilies = explode(',', $request->facilities);
+            $arrayFacilies = $request->facilities;
             for ($i = 0; $i < count($arrayFacilies); $i++) {
                 CornerFacilities::create([
                     'corner_id' => $cornerID->id,
@@ -63,7 +72,7 @@ class CornerController extends Controller
         }
         if (!empty($request->categories)) {
             $cornerID = Corner::latest()->first();
-            $arrayCategories = explode(',', $request->categories);
+            $arrayCategories = $request->categories;
             for ($i = 0; $i < count($arrayCategories); $i++) {
                 CornerCategories::create([
                     'corner_id' => $cornerID->id,
@@ -72,10 +81,20 @@ class CornerController extends Controller
             }
         }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully add corner.'
-        ]);
+        if ($request->hasFile('gambar')) {
+            $i = 0;
+            foreach($request->file('gambar') as $file) {
+                $fileName = time() . $i . '.' . $file->getClientOriginalExtension();
+                $i++;
+                $file->move(public_path('media'), $fileName);
+                $asset = new Image();
+                $asset->path = '/media/'.$fileName;
+                $asset->corner_id = $corner->id;
+                $asset->save();
+            }
+        }
+
+        return redirect('admin/corner');
     }
 
     /**
@@ -93,9 +112,12 @@ class CornerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Corner $corner)
+    public function edit(String $id)
     {
-        //
+        $corner = Corner::findOrFail($id);
+        $facilities = Facility::all();
+        $categories = Category::all();
+        return view('admin.corner.update', ['corner'=>$corner, 'facilities'=>$facilities, 'categories'=>$categories]);
     }
 
     /**
@@ -103,66 +125,62 @@ class CornerController extends Controller
      */
     public function update(UpdateCornerRequest $request, string $id)
     {
-        $corner = Corner::where('id', $id);
-        $currentCategories = CornerCategories::where('corner_id', $corner->first()->id)->get();
-        $currentFacilities = CornerFacilities::where('corner_id', $corner->first()->id)->get();
+        $corner = Corner::findOrFail($id);
+
         $corner->update([
             'location' => $request->location,
             'name' => $request->name,
-            'detail' => $request->detail
+            'detail' => $request->detail,
+            'jam_buka' => $request->jam_buka,
+            'jam_tutup' => $request->jam_tutup,
+            'hari_buka' => $request->days,
+            'harga_min' => $request->harga_min,
+            'harga_max' => $request->harga_max,
         ]);
 
+        CornerFacilities::where('corner_id', $id)->delete();
         if (!empty($request->facilities)) {
-            $arrayFacilities = explode(',', $request->facilities);
-
-            $currentFacilityId = [];
-            foreach ($currentFacilities as $value) {
-                $currentFacilityId[] = $value->facility_id;
-            }
-
-            // Cari kategori yang harus dihapus
-            $categoriesToDelete = array_diff($currentFacilityId, $arrayFacilities);
-
-            // Hapus kategori yang tidak ada di request
-            CornerFacilities::where('corner_id', $corner->first()->id)
-                ->whereIn('facility_id', $categoriesToDelete)
-                ->delete();
-
-            for ($i = 0; $i < count($arrayFacilities); $i++) {
-                CornerFacilities::updateOrCreate([
-                    'corner_id' => $corner->first()->id,
-                    'facility_id' => $arrayFacilities[$i]
+            $arrayFacilies = $request->facilities;
+            for ($i = 0; $i < count($arrayFacilies); $i++) {
+                CornerFacilities::create([
+                    'corner_id' => $corner->id,
+                    'facility_id' => $arrayFacilies[$i]
                 ]);
             }
         }
+
+        CornerCategories::where('corner_id', $id)->delete();
         if (!empty($request->categories)) {
-            $arrayCategories = explode(',', $request->categories);
-
-            $currentCategoryIds = [];
-            foreach ($currentCategories as $category) {
-                $currentCategoryIds[] = $category->category_id;
-            }
-            // Cari kategori yang harus dihapus
-            $categoriesToDelete = array_diff($currentCategoryIds, $arrayCategories);
-
-            // Hapus kategori yang tidak ada di request
-            CornerCategories::where('corner_id', $corner->first()->id)
-                ->whereIn('category_id', $categoriesToDelete)
-                ->delete();
-
+            $arrayCategories = $request->categories;
             for ($i = 0; $i < count($arrayCategories); $i++) {
-                CornerCategories::updateOrCreate([
-                    'corner_id' => $corner->first()->id,
+                CornerCategories::create([
+                    'corner_id' => $corner->id,
                     'category_id' => $arrayCategories[$i]
                 ]);
             }
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully update corner.',
-            'data_id' => $corner->first()->id
-        ]);
+
+        if ($request->hasFile('gambar')) {
+            // Delete old images
+            Image::where('corner_id', $id)->delete();
+
+            $i = 0;
+            foreach ($request->file('gambar') as $file) {
+                $fileName = time() . $i . '.' . $file->getClientOriginalExtension();
+                $i++;
+                $file->move(public_path('media'), $fileName);
+                $asset = new Image();
+                $asset->path = '/media/' . $fileName;
+                $asset->corner_id = $corner->id;
+                $asset->save();
+            }
+        }
+
+        
+
+        return redirect('admin/corner');
     }
+
 
     /**
      * Remove the specified resource from storage.

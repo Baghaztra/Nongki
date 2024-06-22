@@ -4,9 +4,9 @@
     <div class="card shadow mt-3">
         <div class="card-header d-flex justify-content-between">
             Kategori
-            <button class="btn btn-sm btn-primary" id="addBtn">
+            <a class="btn btn-sm btn-primary" href="/admin/corner/create">
                 <i class="fas fa-plus"></i> add
-            </button>
+            </a>
         </div>
         <div class="card-body">
             <div class="table table-responsive">
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalAdd" tabindex="-1">
+    {{-- <div class="modal fade" id="modalAdd" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -48,7 +48,7 @@
                         <span id="error_name" class="text-danger"></span>
                     </div>
 
-                    {{-- Input gambar --}}
+                    
                     <div class="mb-3">
                         <label class="form-label" for="gambar">Media</label>
                         <input type="file" name="gambar[]" id="gambar" class="form-control" accept=".jpg, .jpeg, .png"
@@ -63,7 +63,7 @@
                             </div>
                         </label>
                     </div>
-                    {{--  --}}
+                    
 
                     <div class="mb-3">
                         <label for="lokasi" class="form-label">Lokasi</label>
@@ -111,7 +111,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('scriptpages')

@@ -151,32 +151,33 @@ $(document).ready(function () {
     // mengambil data sesuai id
     $(document).on("click", ".btnEdit", function () {
         clearErrorMsg();
-        clearForm();
-        $(".action").text("Update");
-        $(".action").attr("id", "update");
-        $("#modalAdd").modal("show");
-        $("#modalTitleId").text("Form Update Corner");
+        location.href=`/admin/corner/${$(this).data('id')}/edit`;
+        // clearForm();
+        // $(".action").text("Update");
+        // $(".action").attr("id", "update");
+        // $("#modalAdd").modal("show");
+        // $("#modalTitleId").text("Form Update Corner");
 
-        $.ajax({
-            type: "GET",
-            url: "/admin/corner/" + $(this).data('id'),
-            dataType: "json",
-            success: function (response) {
-                console.log(response)
-                if (response.status === 200) {
-                    $('#name').val(response.data.name);
-                    $('#lokasi').val(response.data.location);
-                    $('#detail').val(response.data.detail);
-                    $('#id').val(response.data.id);
-                    $.each(response.data.facilities, function (indexInArray, valueOfElement) {
-                        $("#modalAdd input[type='checkbox']input[id=f" + valueOfElement.id + "]").prop('checked', true);
-                    });
-                    $.each(response.data.categories, function (indexInArray, valueOfElement) {
-                        $("#modalAdd input[type='checkbox']input[id=c" + valueOfElement.id + "]").prop('checked', true);
-                    });
-                }
-            }
-        });
+        // $.ajax({
+        //     type: "GET",
+        //     url: "/admin/corner/" + $(this).data('id'),
+        //     dataType: "json",
+        //     success: function (response) {
+        //         console.log(response)
+        //         if (response.status === 200) {
+        //             $('#name').val(response.data.name);
+        //             $('#lokasi').val(response.data.location);
+        //             $('#detail').val(response.data.detail);
+        //             $('#id').val(response.data.id);
+        //             $.each(response.data.facilities, function (indexInArray, valueOfElement) {
+        //                 $("#modalAdd input[type='checkbox']input[id=f" + valueOfElement.id + "]").prop('checked', true);
+        //             });
+        //             $.each(response.data.categories, function (indexInArray, valueOfElement) {
+        //                 $("#modalAdd input[type='checkbox']input[id=c" + valueOfElement.id + "]").prop('checked', true);
+        //             });
+        //         }
+        //     }
+        // });
     });
 
     // proses update data
@@ -273,44 +274,5 @@ $(document).ready(function () {
             }
         });
     })
-
-
-    // input gambar
-    document.getElementById('img-preview').addEventListener('click', function () {
-        document.getElementById('gambar').click();
-    });
-
-    document.getElementById('img-preview').addEventListener('click', function () {
-        document.getElementById('gambar').click();
-    });
-
-    document.getElementById('gambar').addEventListener('change', function (event) {
-        const files = event.target.files;
-        const previewContainer = document.getElementById('preview-container');
-        previewContainer.innerHTML = ''; // Kosongin dulu container preview
-
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'preview-item col-6 mb-2';
-
-                const imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-
-                const removeButton = document.createElement('button');
-                removeButton.className = 'remove-button';
-                removeButton.innerHTML = '&times;';
-                removeButton.addEventListener('click', function () {
-                    previewContainer.removeChild(previewItem);
-                });
-
-                previewItem.appendChild(imgElement);
-                previewItem.appendChild(removeButton);
-                previewContainer.appendChild(previewItem);
-            };
-            reader.readAsDataURL(file);
-        });
-    });
 });
 
