@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CornerController;
@@ -11,9 +12,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin/dashboard', function () {
-    return view('admin.dashboard');
-});
+Route::resource('admin/dashboard', AdminController::class);
+Route::get('get-data-recomendation', [AdminController::class, 'getAllData']);
 
 Route::resource('admin/corner', CornerController::class);
 Route::resource('admin/categories', CategoryController::class);
