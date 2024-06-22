@@ -25,13 +25,9 @@
             <input type="file" name="gambar[]" id="gambar" class="form-control @error('gambar') is-invalid @enderror" onchange="previewFiles(event)" accept=".jpg, .jpeg, .png, .mp4, .mkv" hidden multiple>
             <div id="preview-container">
                 <!-- Pratinjau media yang ada -->
-                @foreach($destinasis->media as $media)
+                @foreach($corner->images as $media)
                 <div style="position: relative; display: inline-block;" data-media-id="{{ $media->id }}">
-                    @if($media->tipe === 'gambar')
-                    <img src="/media/{{ $media->nama }}" class="img-thumbnail" style="width: 300px; display: block;">
-                    @elseif($media->tipe === 'video')
-                    <video src="/media/{{ $media->nama }}" class="img-thumbnail" style="width: 300px; display: block;" controls></video>
-                    @endif
+                    <img src="{{ $media->path }}" class="img-thumbnail" style="width: 300px; display: block;">
                     <button onclick="removeExistingMedia({{ $media->id }})" style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 50%; cursor: pointer;">&#x2715;</button>
                 </div>
                 @endforeach
@@ -73,14 +69,8 @@
                         previewWrapper.style.display = 'inline-block';
                         previewWrapper.dataset.new = true; // Menandai sebagai media baru
                         
-                        if (file.type.startsWith('image/')) {
-                            mediaElement = document.createElement('img');
-                            mediaElement.src = reader.result;
-                        } else if (file.type.startsWith('video/')) {
-                            mediaElement = document.createElement('video');
-                            mediaElement.src = reader.result;
-                            mediaElement.controls = true;
-                        }
+                        mediaElement = document.createElement('img');
+                        mediaElement.src = reader.result;
         
                         if (mediaElement) {
                             mediaElement.classList.add('img-thumbnail');
@@ -121,7 +111,7 @@
                 const mediaElement = document.querySelector(`[data-media-id='${id}']`);
                 if (mediaElement) {
                     mediaElement.remove();
-                    fetch(`/media/${id}`, {
+                    fetch(`/images/${id}`, {
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',

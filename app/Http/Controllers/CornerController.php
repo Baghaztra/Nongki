@@ -86,9 +86,9 @@ class CornerController extends Controller
             foreach($request->file('gambar') as $file) {
                 $fileName = time() . $i . '.' . $file->getClientOriginalExtension();
                 $i++;
-                $file->move(public_path('media'), $fileName);
+                $file->move(public_path('images'), $fileName);
                 $asset = new Image();
-                $asset->path = '/media/'.$fileName;
+                $asset->path = '/images/'.$fileName;
                 $asset->corner_id = $corner->id;
                 $asset->save();
             }
@@ -168,9 +168,9 @@ class CornerController extends Controller
             foreach ($request->file('gambar') as $file) {
                 $fileName = time() . $i . '.' . $file->getClientOriginalExtension();
                 $i++;
-                $file->move(public_path('media'), $fileName);
+                $file->move(public_path('images'), $fileName);
                 $asset = new Image();
-                $asset->path = '/media/' . $fileName;
+                $asset->path = '/images/' . $fileName;
                 $asset->corner_id = $corner->id;
                 $asset->save();
             }
