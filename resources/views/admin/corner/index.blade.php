@@ -40,14 +40,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <input type="hidden" id="id" style="display: none">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name"
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <input type="hidden" id="id" style="display: none">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" id="name"
                             placeholder="Masukkan nama tempat" />
-                        <span id="error_name" class="text-danger"></span>
+                            <span id="error_name" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="lokasi" class="form-label">Lokasi</label>
+                            <input type="text" class="form-control" name="lokasi" id="lokasi"
+                                placeholder="Masukkan URL lokasi" />
+                            <span id="error_lokasi" class="text-danger"></span>
+                        </div>
                     </div>
-
                     {{-- Input gambar --}}
                     <div class="mb-3">
                         <label class="form-label" for="gambar">Media</label>
@@ -56,21 +63,14 @@
                         <div id="preview-container" class="row">
                             <!-- Pratinjau media yang ada -->
                         </div>
-                        <label class="form-label" for="gambar">
+                        <label class="form-label" for="gambar" style="margin-top: 0.75rem; display: flex; justify-content: center; align-items: center;">
                             <div id="img-preview" class="img-thumbnail"
-                                style="width: 350px; height: 175px; display: flex; justify-content: center; align-items: center; cursor: pointer; background-color: aliceblue">
+                                style="width: 350px; height: 150px; cursor: pointer; background-color: aliceblue; text-align:center; display: flex; justify-content: center; align-items: center;">
                                 <i class="fas fa-plus"></i>
                             </div>
                         </label>
                     </div>
                     {{--  --}}
-
-                    <div class="mb-3">
-                        <label for="lokasi" class="form-label">Lokasi</label>
-                        <input type="text" class="form-control" name="lokasi" id="lokasi"
-                            placeholder="Masukkan url lokasi" />
-                        <span id="error_lokasi" class="text-danger"></span>
-                    </div>
                     <div class="mb-3">
                         <label for="detail" class="form-label">Detail</label>
                         <textarea class="form-control" name="detail" id="detail" placeholder="Masukkan detail"></textarea>
