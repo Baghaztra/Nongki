@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CornerCategories;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class CornerCategoriesController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view("admin.users.index");
     }
+
+    public function getGetAllData()
+    {
+        $data = User::latest()->get();
+        return response()->json([
+            'status' => 200,
+            'data' => $data
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -34,7 +44,7 @@ class CornerCategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CornerCategories $cornerCategories)
+    public function show(User $user)
     {
         //
     }
@@ -42,7 +52,7 @@ class CornerCategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CornerCategories $cornerCategories)
+    public function edit(User $user)
     {
         //
     }
@@ -50,7 +60,7 @@ class CornerCategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CornerCategories $cornerCategories)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -58,7 +68,7 @@ class CornerCategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CornerCategories $cornerCategories)
+    public function destroy(User $user)
     {
         //
     }
