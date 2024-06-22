@@ -13,30 +13,40 @@ class FECornerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $query = $request->input('query');
-        if (request('q')) {
-            $search = request('q');
-            $data = Corner::with(['images', 'categories', 'facilities'])
-                ->where("name", "like", "%" . $search . '%')
-                ->orWhereHas('categories', function ($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                })
-                ->whereHas('facilities', function ($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                })
-                ->latest()
-                ->paginate(25);
-        } else {
-            $data = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
+        $query = Corner::query()
+            ->select('corners.*')
+            ->join('corner_facilities', 'corners.id', '=', 'corner_facilities.corner_id')
+            ->join('facilities', 'corner_facilities.facility_id', '=', 'facilities.id')
+            ->join('corner_categories', 'corners.id', '=', 'corner_categories.corner_id')
+            ->join('categories', 'corner_categories.category_id', '=', 'categories.id')
+            ->distinct();
+
+        if ($request->has('q')) {
+            $search = $request->q;
+            $query->where('corners.name', 'like', '%' . $search . '%');
         }
 
-        // $corners = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
+        if ($request->has('categories')) {
+            $categories = $request->categories;
+            $query->where(function($q) use ($categories) {
+                $q->whereIn('categories.id', $categories);
+            });
+        }
+
+        if ($request->has('facilities')) {
+            $facilities = $request->facilities;
+            $query->where(function($q) use ($facilities) {
+                $q->whereIn('facilities.id', $facilities);
+            });
+        }
+
+        $corners = $query->latest()->paginate(25);
         $categories = Category::latest()->get();
         $facilities = Facility::latest()->get();
 
-        return view('home.index', ['corners'=>$data, 'categories'=>$categories, 'facilities'=>$facilities]);
+        return view('home.index', compact('corners', 'categories', 'facilities'));
     }
 
     /**
