@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Recomendation;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view("admin.users.index");
+        return view('admin.dashboard');
     }
 
     public function getAllData()
     {
-        $data = User::latest()->get();
         return response()->json([
             'status' => 200,
-            'data' => $data
+            'data' => Recomendation::latest()->where('status', '=', 0)->get()
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -44,18 +42,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Recomendation $recomendation)
     {
-        return response()->json([
-            'status' => 200,
-            'data' => $user
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Recomendation $recomendation)
     {
         //
     }
@@ -63,15 +58,19 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, string $id)
     {
-        //
+        Recomendation::where('id', $id)->update(['status' => 1]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'TOKAY'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Recomendation $recomendation)
     {
         //
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CornerController;
@@ -11,17 +12,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin/dashboard',function () {
-    return view('admin.dashboard');
-});
+
+Route::resource('admin/dashboard', AdminController::class);
+Route::get('get-data-recomendation', [AdminController::class, 'getAllData']);
 Route::resource('admin/corner', CornerController::class);
 Route::resource('admin/categories', CategoryController::class);
 Route::resource('admin/facilities', FacilityController::class);
 Route::resource('admin/users', UserController::class);
-Route::get('get-data-corner', [CornerController::class, 'getGetAllData']);
-Route::get('get-data-categories', [CategoryController::class, 'getGetAllData']);
-Route::get('get-data-facilities', [FacilityController::class, 'getGetAllData']);
-Route::get('get-data-users', [UserController::class, 'getGetAllData']);
+Route::get('get-data-corner', [CornerController::class, 'getAllData']);
+Route::get('get-data-categories', [CategoryController::class, 'getAllData']);
+Route::get('get-data-facilities', [FacilityController::class, 'getAllData']);
+Route::get('get-data-users', [UserController::class, 'getAllData']);
+
 
 
 Route::get('/home', [FECornerController::class, 'index']);
@@ -29,3 +31,4 @@ Route::get('/home', [FECornerController::class, 'index']);
 Route::get('/login', function () {
     return view('login');
 });
+

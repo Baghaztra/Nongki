@@ -9,7 +9,7 @@
 @section('content')
     <div class="card shadow mt-3">
         <div class="card-header d-flex justify-content-between">
-            Facilities 
+            Facilities
             <button class="btn btn-sm btn-primary" id="addBtn">
                 <i class="fas fa-plus"></i> add
             </button>
@@ -17,7 +17,8 @@
         <div class="card-body">
             <div class="table table-responsive">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover" id="tablefasility" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped table-hover" id="tablefasility" width="100%"
+                        cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -47,9 +48,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
+                        <input type="hidden" id="id" style="display: none">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" name="name" id="name"
                             placeholder="type a facilities" />
+                        <span class="text-danger" id="error_name"></span>
                     </div>
                 </div>
                 <div class="modal-footer">

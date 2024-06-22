@@ -24,7 +24,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' data-id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' data-id='" + row.id + "'><i class='fa-solid fa-pen-to-square'></i></button>"
                 }
                 , "orderable": false
             } // Contoh tombol aksi
@@ -35,6 +35,7 @@ $(document).ready(function () {
         $('.action').text('Save');
         $('.action').attr('id', 'save');
         $('#name').val('');
+        $("#modalTitleId").text("Form Add categories");
     }
 
     function clearErrorMsg() {
@@ -55,6 +56,7 @@ $(document).ready(function () {
         $('.action').attr('id', 'update');
         $('.action').text('Update');
         $('#modalAdd').modal('show');
+        $("#modalTitleId").text("Form Update categories");
         clearErrorMsg();
 
         $.ajax({
@@ -70,6 +72,7 @@ $(document).ready(function () {
         });
     });
 
+    // menangani proses simpan data
     $(document).on('click', '#save', function () {
         // console.log('save');
         var data = new FormData();
@@ -168,6 +171,6 @@ $(document).ready(function () {
                 });
             }
         });
-    })
+    });
 
 });
