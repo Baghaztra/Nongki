@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-
+@section('title', 'Corner')
 @section('content')
 <div class="card shadow mt-3">
     <div class="card-header d-flex justify-content-between">

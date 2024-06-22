@@ -13,7 +13,16 @@ class FacilityController extends Controller
      */
     public function index()
     {
-        //
+        return view("admin.facilities.index");
+    }
+
+    public function getGetAllData()
+    {
+        $data = Facility::latest()->get();
+        return response()->json([
+            'status' => 200,
+            'data' => $data
+        ]);
     }
 
     /**
@@ -37,7 +46,10 @@ class FacilityController extends Controller
      */
     public function show(Facility $facility)
     {
-        //
+        return response()->json([
+            'status' => 200,
+            'data' => $facility
+        ]);
     }
 
     /**
