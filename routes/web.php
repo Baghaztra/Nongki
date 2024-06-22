@@ -7,4 +7,5 @@ Route::get('/', function () {
     return view('admin.categori.index');
 });
 
-Route::resource('kategori', CategoryController::class);
+Route::resource('admin/kategori', CategoryController::class);
+Route::get('get-data-kategori', [CategoryController::class, 'getGetAllData']);
