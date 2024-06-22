@@ -25,7 +25,12 @@
             </div>
 
             <div class="container">
-                
+                @foreach ($corners as $corner)
+                    <div class="corner">
+                        <h1 class="text-lg">{{ $corner->name }}</h1>
+                        <p class="category">{{ $corner->categories}}</p>
+                    </div>
+                @endforeach
             </div>
         </div>
     </main>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCornerRequest;
 use App\Http\Requests\UpdateCornerRequest;
+use App\Models\Category;
 use App\Models\Corner;
 
 class CornerController extends Controller
@@ -13,7 +14,10 @@ class CornerController extends Controller
      */
     public function index()
     {
-        //
+        // return view('home');
+        $corners=Corner::latest()->paginate(25);
+        $category=Category::latest()->paginate(25);
+        return view('home.home')->with(['corners'=> $corners,'category'=> $category]);
     }
 
     /**
@@ -21,7 +25,6 @@ class CornerController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
