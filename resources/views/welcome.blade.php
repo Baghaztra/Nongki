@@ -43,7 +43,7 @@
                 <div class="col-lg-6 about-us">
                     <h5 class="section-title">About Us</h5>
                     <p class="section-content text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, voluptatem accusamus suscipit accusantium quidem enim laboriosam quibusdam, voluptas, cumque maiores aperiam dolorum odio dolorem nisi perspiciatis recusandae veritatis. Tempora, iure.
+                        e.
                     </p>
                 </div>
                 <div class="col-lg-6 mr-5 contact-info">
