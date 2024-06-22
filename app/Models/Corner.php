@@ -22,6 +22,6 @@ class Corner extends Model
 
     public function image()
     {
-        return $this->hasMany(Image::class, 'img_id', 'id');
+        return $this->hasMany(Image::class, 'corner_id', 'id');
     }
 }

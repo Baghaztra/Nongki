@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Corner;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,10 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
+        $img = ['dummy1.jpg', 'dummy2.jpg', 'dummy3.jpg'][rand(0, 2)];
         return [
-            //
+            'path' => 'images/'.$img,
+            'corner_id' => Corner::all()->random()->id
         ];
     }
 }

@@ -18,7 +18,7 @@ class CornerFactory extends Factory
     {
         return [
             'name' => fake()->word(2),
-            'location' => fake()->sentence(),
+            'location' => 'https://maps.google.com/?q=' . fake()->latitude . ',' . fake()->longitude,
             'detail' => fake()->paragraph(),
         ];
     }
