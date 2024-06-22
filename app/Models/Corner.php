@@ -14,7 +14,7 @@ class Corner extends Model
     {
         return $this->belongsToMany(Facility::class, 'corner_facilities', 'corner_id', 'facility_id');
     }
-    
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'corner_categories', 'corner_id', 'category_id');

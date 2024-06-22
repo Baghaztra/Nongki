@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Corner;
+use App\Models\Category;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCornerRequest;
 use App\Http\Requests\UpdateCornerRequest;
-use App\Models\Corner;
 
 class CornerController extends Controller
 {
@@ -13,9 +15,12 @@ class CornerController extends Controller
      */
     public function index()
     {
-        $corner = Corner::latest()->paginate(10);
 
-        return view("admin.corner.index", ['corner' => $corner, 'search' => request('search')]);
+        // Ambil data Corner dengan relasi terkait
+        $corners = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
+        $categories = Category::latest()->get();
+
+        return view('home.home', compact('corners', 'categories'));
     }
 
     /**
@@ -68,4 +73,5 @@ class CornerController extends Controller
     {
         //
     }
+
 }
