@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Corner;
+use App\Models\Category;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCornerRequest;
 use App\Http\Requests\UpdateCornerRequest;
-use App\Models\Corner;
 
 class CornerController extends Controller
 {
