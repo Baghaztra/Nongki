@@ -20,7 +20,7 @@
                                 <th>Kategori</th>
                                 <th>Fasilitas</th>
                                 <th>Lokasi</th>
-                                <th>action</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,7 +33,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modalAdd" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modalTitleId">Form Add Corner</h1>
@@ -51,13 +51,15 @@
                     {{-- Input gambar --}}
                     <div class="mb-3">
                         <label class="form-label" for="gambar">Media</label>
-                        <input type="file" name="gambar[]" id="gambar" class="form-control" accept=".jpg, .jpeg, .png, .mp4, .mkv" hidden multiple>
-                        <div id="preview-container">
+                        <input type="file" name="gambar[]" id="gambar" class="form-control" accept=".jpg, .jpeg, .png"
+                            hidden multiple>
+                        <div id="preview-container" class="row">
                             <!-- Pratinjau media yang ada -->
                         </div>
                         <label class="form-label" for="gambar">
-                            <div id="img-preview" class="img-thumbnail" style="width: 300px; height: 150px; display: flex; justify-content: center; align-items: center; cursor: pointer; background-color: aliceblue">
-                                <i data-feather="plus" style="width: 100px; height: 100px;"></i>
+                            <div id="img-preview" class="img-thumbnail"
+                                style="width: 350px; height: 175px; display: flex; justify-content: center; align-items: center; cursor: pointer; background-color: aliceblue">
+                                <i class="fas fa-plus"></i>
                             </div>
                         </label>
                     </div>
@@ -78,7 +80,7 @@
                         <label for="name" class="form-label">Choise categories</label>
                         <div class="row">
                             @foreach ($categories as $item)
-                                <div class="col-4">
+                                <div class="col-3">
                                     <input type="checkbox" id="c{{ $item->id }}" data-id="categories"
                                         value="{{ $item->id }}">
                                     <label for="c{{ $item->id }}">{{ $item->name }}</label>
@@ -91,7 +93,7 @@
                         <label for="" class="form-label">Choise facilities</label>
                         <div class="row">
                             @foreach ($facilities as $item)
-                                <div class="col-4">
+                                <div class="col-3">
                                     <input type="checkbox" id="f{{ $item->id }}" data-id="facilities"
                                         value="{{ $item->id }}">
                                     <label for="f{{ $item->id }}">{{ $item->name }}</label>
