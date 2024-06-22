@@ -26,7 +26,59 @@
         </nav>
     </header>
     <main>
-        
+        <div class="top">
+            <div class="search">
+                <input type="search" id="search" placeholder="Temukan tempat nongki anda...">
+                <i class="fa-solid fa-search"></i>
+            </div>
+            <div class="filters">
+                <i class="fa-solid fa-filter"></i>
+            </div>
+        </div>
+        <div class="corners">
+            @for($i = 0; $i <= 15; $i++)
+                <div class="corner">
+                <h2 class="name">Pondok Aciak Jaya</h2>
+                <p class="categories">
+                    <span class="category">Cafe</span>, 
+                    <span class="category"> Workspace</span>,
+                    <span class="category"> Khodams</span>,
+                    <span class="category"> Restaurant</span>
+                </p>
+                <div class="image">
+                    <div class="left">
+                        <div class="facilities">
+                            <span class="facility">Wifi</span>, 
+                            <span class="facility"> Electricity</span>,
+                            <span class="facility"> AC</span>,
+                            <span class="facility"> Toilet</span>
+                        </div>
+                        <div class="location">
+                            <i class="fa-solid fa-earth"></i>
+                            Pauh, Padang
+                        </div>
+                    </div>
+                    <div class="right">
+                        <button type="button">View</button>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="detail flex flex-row">
+                        <div class="icons">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <div class="paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum neque repellat nam ab quas. <span class="read">Selengkapnya...</span></div>
+                    </div>
+                    <p class="status"><span class="icons"><i class="fa-solid fa-clock"></i></span> Tutup pukul 23.00</p>
+                    <ul class="others">
+                        <li class="other">Menu</li>
+                        <li class="other">Service</li>
+                        <li class="other">Contact</li>
+                    </ul>
+                </div>
+            @endfor
+            </div>
+        </div>
     </main>
 
     @foreach ($corners as $item)
