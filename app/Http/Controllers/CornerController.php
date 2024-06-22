@@ -13,11 +13,18 @@ class CornerController extends Controller
      */
     public function index()
     {
-        $corner = Corner::latest()->paginate(10);
-
-        return view("admin.corner.index", ['corner' => $corner, 'search' => request('search')]);
+        return view("admin.corner.index");
     }
 
+    public function getAllData()
+    {
+        $data = Corner::with(['facilities', 'categories', 'image'])->latest()->get();
+        return response()->json([
+            'status' => 200,
+            'message' => 'data found',
+            'data' => $data
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */

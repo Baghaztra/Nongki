@@ -16,7 +16,7 @@ class CategoryController extends Controller
         return view('admin.categori.index');
     }
 
-    public function getGetAllData()
+    public function getAllData()
     {
         $data = Category::latest()->get();
         return response()->json([

@@ -1,41 +1,47 @@
 $(document).ready(function () {
     // const datatablesSimple = document.getElementById('tablekategori');
     // new simpleDatatables.DataTable(datatablesSimple);
-    $('#tablekategori').dataTable({
-        "processing": true,
-        "paging": true,
-        "searching": true,
-        "responsive": true,
-        "language": {
-            "search": "cari"
+    $("#tablefasility").dataTable({
+        processing: true,
+        paging: true,
+        searching: true,
+        responsive: true,
+        language: {
+            search: "cari",
         },
-        "ajax": {
-            "url": "/get-data-categories",
-            "type": "GET"
+        ajax: {
+            url: "/get-data-corner",
+            type: "GET",
         },
-        "columns": [
+        columns: [
             {
-                "data": null,
-                "render": function (_data, _type, _row, meta) {
+                data: null,
+                render: function (_data, _type, _row, meta) {
                     return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
-                }
+                },
             },
-            { "data": "name", "orderable": true },
+            { data: "name", orderable: true },
             {
-                "data": null,
-                "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' data-id='" + row.id + "'><i class='fa-solid fa-pen-to-square'></i></button>"
-                }
-                , "orderable": false
-            } // Contoh tombol aksi
-        ]
+                data: null,
+                render: function (_data, _type, row) {
+                    return (
+                        "<button type='button' data-id='" +
+                        row.id +
+                        "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' data-id='" +
+                        row.id +
+                        "'><i class='fa-solid fa-pen-to-square'></i></i></button>"
+                    );
+                },
+                orderable: false,
+            }, // Contoh tombol aksi
+        ],
     });
 
     function clearForm() {
-        $('.action').text('Save');
-        $('.action').attr('id', 'save');
-        $('#name').val('');
-        $("#modalTitleId").text("Form Add categories");
+        $("#name").val("");
+        $(".action").text("Save");
+        $(".action").attr("id", "save");
+        $("#modalTitleId").text("Form Add facilities");
     }
 
     function clearErrorMsg() {
@@ -43,43 +49,20 @@ $(document).ready(function () {
         $('#error_name').text('');
     }
 
-    $('#addBtn').on('click', function () {
-        $('#modalAdd').modal('show');
-        if ($('.action').attr('id') == 'update') {
+    $("#addBtn").on("click", function () {
+        $("#modalAdd").modal("show");
+        if ($(".action").attr("id") == "update") {
             clearForm();
-            clearErrorMsg();
         }
     });
 
-    // click edit btn
-    $(document).on('click', '.btnEdit', function () {
-        $('.action').attr('id', 'update');
-        $('.action').text('Update');
-        $('#modalAdd').modal('show');
-        $("#modalTitleId").text("Form Update categories");
-        clearErrorMsg();
-
-        $.ajax({
-            type: "GET",
-            url: "/admin/categories/" + $(this).data('id'),
-            dataType: "json",
-            success: function (response) {
-                if (response.status == 200) {
-                    $('#name').val(response.data.name);
-                    $('#id').val(response.data.id);
-                }
-            }
-        });
-    });
-
-    // menangani proses simpan data
     $(document).on('click', '#save', function () {
         // console.log('save');
         var data = new FormData();
         data.append('name', $('#name').val());
         $.ajax({
             type: "POST",
-            url: "/admin/categories",
+            url: "/admin/facilities",
             data: data,
             contentType: false,
             processData: false,
@@ -92,14 +75,14 @@ $(document).ready(function () {
                         title: "Success",
                         text: response.message
                     });
-                    reloadTable(tablekategori);
+                    reloadTable(tablefasility);
                     clearForm();
                     $('#modalAdd').modal('hide')
                 }
             },
             error: function (errors) {
                 if (errors.status === 422) {
-                    // console.log(errors);
+                    console.log(errors.responseJSON.errors.name);
                     clearErrorMsg();
                     if (errors.responseJSON.errors.name) {
                         $('#name').addClass('is-invalid');
@@ -110,14 +93,34 @@ $(document).ready(function () {
         });
     });
 
-    // menangani proses update data
+    // mengambil data sesuai id
+    $(document).on("click", ".btnEdit", function () {
+        clearErrorMsg();
+        $(".action").text("Update");
+        $(".action").attr("id", "update");
+        $("#modalAdd").modal("show");
+        $("#modalTitleId").text("Form Update facilities");
+
+        $.ajax({
+            type: "GET",
+            url: "/admin/facilities/" + $(this).data('id'),
+            dataType: "json",
+            success: function (response) {
+                if (response.status === 200) {
+                    $('#name').val(response.data.name);
+                    $('#id').val(response.data.id);
+                }
+            }
+        });
+    });
+
     $(document).on('click', '#update', function () {
         var data = new FormData();
         data.append('_method', 'PUT');
         data.append('name', $('#name').val());
         $.ajax({
             type: "POST",
-            url: "/admin/categories/" + $('#id').val(),
+            url: "/admin/facilities/" + $('#id').val(),
             data: data,
             processData: false,
             contentType: false,
@@ -129,7 +132,7 @@ $(document).ready(function () {
                     text: response.message
                 });
                 $('#modalAdd').modal('hide');
-                reloadTable(tablekategori);
+                reloadTable(tablefasility);
             },
             error: function (errors) {
                 if (errors.status === 422) {
@@ -157,10 +160,10 @@ $(document).ready(function () {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/categories/" + $(this).data('id'),
+                    url: "/admin/facilities/" + $(this).data('id'),
                     dataType: "json",
                     success: function (response) {
-                        reloadTable(tablekategori);
+                        reloadTable(tablefasility);
                         Swal.fire({
                             title: "Deleted!",
                             text: response.message,
@@ -171,6 +174,5 @@ $(document).ready(function () {
                 });
             }
         });
-    });
-
+    })
 });

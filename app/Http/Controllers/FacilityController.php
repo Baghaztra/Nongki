@@ -16,7 +16,7 @@ class FacilityController extends Controller
         return view("admin.facilities.index");
     }
 
-    public function getGetAllData()
+    public function getAllData()
     {
         $data = Facility::latest()->get();
         return response()->json([
@@ -38,7 +38,17 @@ class FacilityController extends Controller
      */
     public function store(StoreFacilityRequest $request)
     {
-        //
+        if (Facility::create(['name' => $request->name])) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Successfully add fasility.'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 201,
+            'message' => 'Error add fasility.'
+        ]);
     }
 
     /**
@@ -65,7 +75,16 @@ class FacilityController extends Controller
      */
     public function update(UpdateFacilityRequest $request, Facility $facility)
     {
-        //
+        if ($facility->update(['name' => $request->name])) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Successfully update facilities.'
+            ]);
+        }
+        return response()->json([
+            'status' => 201,
+            'message' => 'Error update facilities.'
+        ]);
     }
 
     /**
@@ -73,6 +92,15 @@ class FacilityController extends Controller
      */
     public function destroy(Facility $facility)
     {
-        //
+        if ($facility->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Successfully dalete facilities.'
+            ]);
+        }
+        return response()->json([
+            'status' => 201,
+            'message' => 'Error update facilities.'
+        ]);
     }
 }

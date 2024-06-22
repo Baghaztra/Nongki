@@ -15,7 +15,7 @@ class UserController extends Controller
         return view("admin.users.index");
     }
 
-    public function getGetAllData()
+    public function getAllData()
     {
         $data = User::latest()->get();
         return response()->json([
