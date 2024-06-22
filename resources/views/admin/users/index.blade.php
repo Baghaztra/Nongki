@@ -9,7 +9,7 @@
 @section('content')
     <div class="card shadow mt-3">
         <div class="card-header d-flex justify-content-between">
-            Users 
+            Users
             <button class="btn btn-sm btn-primary" id="addBtn">
                 <i class="fas fa-plus"></i> add
             </button>
@@ -17,7 +17,8 @@
         <div class="card-body">
             <div class="table table-responsive">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover" id="tableusers" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped table-hover" id="tableusers" width="100%"
+                        cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -35,7 +36,6 @@
     </div>
 
     {{-- modal disini --}}
-    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
     <div class="modal fade" id="modalAdd" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -47,20 +47,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" style="display: none" id="id">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name"
-                            placeholder="your name" />
+                        <input type="text" class="form-control" name="name" id="name" placeholder="your name" />
+                        <span id="error_name" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" name="email" id="email"
                             placeholder="xxx@example.com" />
+                        <span id="error_email" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label password">Password</label>
                         <input type="password" class="form-control" name="password" id="password"
-                            placeholder="fill in just if you wanna change" />
+                            placeholder="Type password" />
+                        <span id="error_password" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
