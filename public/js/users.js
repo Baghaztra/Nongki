@@ -198,12 +198,20 @@ $(document).ready(function () {
                     url: "/admin/users/" + $(this).data('id'),
                     dataType: "json",
                     success: function (response) {
+                        console.log(response)
                         if (response.status === 200) {
                             reloadTable(tableusers);
                             Swal.fire({
                                 title: "Deleted!",
                                 text: response.message,
                                 icon: "success"
+                            });
+                        }
+                        if (response.status === 204) {
+                            Swal.fire({
+                                title: "Ops...!",
+                                text: response.message,
+                                icon: "error"
                             });
                         }
                     },

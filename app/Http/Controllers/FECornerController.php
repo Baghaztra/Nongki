@@ -30,19 +30,19 @@ class FECornerController extends Controller
 
         if ($request->has('categories')) {
             $categories = $request->categories;
-            $query->where(function($q) use ($categories) {
+            $query->where(function ($q) use ($categories) {
                 $q->whereIn('categories.id', $categories);
             });
         }
 
         if ($request->has('facilities')) {
             $facilities = $request->facilities;
-            $query->where(function($q) use ($facilities) {
+            $query->where(function ($q) use ($facilities) {
                 $q->whereIn('facilities.id', $facilities);
             });
         }
 
-        $corners = $query->latest()->paginate(25);
+        $corners = $query->latest()->paginate(10);
         $categories = Category::latest()->get();
         $facilities = Facility::latest()->get();
 
