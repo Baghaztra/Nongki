@@ -58,7 +58,15 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        if ($category) {
+            return response()->json([
+                'status' => 200,
+                'data' => $category
+            ]);
+        }
+        return response()->json([
+            'message' => 'Data not found.'
+        ]);
     }
 
     /**
@@ -74,7 +82,13 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->update([
+            'name' => $request->name
+        ]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Successfully update categories.'
+        ]);
     }
 
     /**
@@ -82,6 +96,16 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if ($category) {
+            $category->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Successfully delete categories.'
+            ]);
+        }
+        return response()->json([
+            'status' => 404,
+            'message' => 'Categories not found.'
+        ]);
     }
 }
