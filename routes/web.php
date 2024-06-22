@@ -14,7 +14,6 @@ Route::get('/', function () {
 Route::get('admin/dashboard',function () {
     return view('admin.dashboard');
 });
-
 Route::resource('admin/corner', CornerController::class);
 Route::resource('admin/categories', CategoryController::class);
 Route::resource('admin/facilities', FacilityController::class);
@@ -24,4 +23,9 @@ Route::get('get-data-categories', [CategoryController::class, 'getGetAllData']);
 Route::get('get-data-facilities', [FacilityController::class, 'getGetAllData']);
 Route::get('get-data-users', [UserController::class, 'getGetAllData']);
 
+
 Route::get('/home', [FECornerController::class, 'index']);
+
+Route::get('/login', function () {
+    return view('login');
+});
