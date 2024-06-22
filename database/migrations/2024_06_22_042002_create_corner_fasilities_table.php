@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('corner_fasilities', function (Blueprint $table) {
+        Schema::create('corner_facilities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('corner_id')->constrained('corners')->onDelete('cascade');;
             $table->foreignId('facility_id')->constrained('facilities')->onDelete('cascade');;
