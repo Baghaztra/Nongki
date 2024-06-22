@@ -113,6 +113,12 @@ class UserController extends Controller
                 'message' => 'Data not found.'
             ]);
         }
+        if (auth()->user()->id == $user->id) {
+            return response()->json([
+                'status' => 204,
+                'message' => 'Cannot remove your account.'
+            ]);
+        }
         $user->delete();
         return response()->json([
             'status' => 200,

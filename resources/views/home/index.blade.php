@@ -17,49 +17,64 @@
             <div class="container d-flex flex-wrap justify-content-center">
                 <a href="/"
                     class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
-                    <img class="bi me-2" width="40" height="32"></img>
+                    <img class="bi me-2" src="/assets/img/logo_nongki.png" style="object-fit: cover" width="40"
+                        height="40"></img>
                     <span class="fs-4">Nongki</span>
                 </a>
 
                 <form method="GET" action="/home" class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-                    <input type="search" class="form-control" name="q"
-                        placeholder="Temukan tempat nongki anda..." aria-label="Search">
-                    <div class="row">
-                        <div class="col-6 categories">
-                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Categories
-                            </button>
-                            <ul class="dropdown-menu">
-                                @foreach ($categories as $item)
-                                <li style="display: flex;"><input type="checkbox" name="categories[]" value="{{ $item->id }}" class="mx-2">
-                                    <label class="dropdown-item">{{ $item->name }}</label>
+                    <div class="input-group mb-3">
+                        <input type="search" class="form-control" name="q" value="{{ request('q') }}"
+                            placeholder="Cari tempat nongkrong">
+                        <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" aria-expanded="false">
+                            Categories
+                        </button>
+                        {{-- @dd(old('categories')) --}}
+                        <ul class="dropdown-menu">
+                            @foreach ($categories as $item)
+                                <li style="display: flex;">
+                                    <?php
+                                    $categories = [];
+                                    if (request('categories')) {
+                                        $categories = request('categories');
+                                    }
+                                    ?>
+                                    <input type="checkbox" name="categories[]" value="{{ $item->id }}"
+                                        id="c{{ $item->id }}" class="mx-2"
+                                        {{ in_array($item->id, $categories) ? 'checked' : '' }}>
+                                    <label class="dropdown-item" for="c{{ $item->id }}">{{ $item->name }}</label>
                                 </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="col-6 facilities">
-                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Facilities
-                            </button>
-                            <ul class="dropdown-menu">
-                                @foreach ($facilities as $item)
-                                <li style="display: flex;"><input type="checkbox" name="facilities[]" value="{{ $item->id }}" class="mx-2">
-                                    <label class="dropdown-item">{{ $item->name }}</label>
+                            @endforeach
+                        </ul>
+                        <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" aria-expanded="false">
+                            Facilities
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach ($facilities as $item)
+                                <?php
+                                $facility = [];
+                                if (request('facilities')) {
+                                    $facility = request('facilities');
+                                }
+                                ?>
+                                <li style="display: flex;"><input type="checkbox" id="f{{ $item->id }}"
+                                        name="facilities[]" value="{{ $item->id }}" class="mx-2"
+                                        {{ in_array($item->id, $facility) ? 'checked' : '' }}>
+                                    <label class="dropdown-item" for="f{{ $item->id }}">{{ $item->name }}</label>
                                 </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                            @endforeach
+                        </ul>
+                        <button class="btn btn-warning" type="submit">Search</button>
                     </div>
-                    {{-- <button type="submit" class="btn btn-primary mt-3">Cari</button> --}}
                 </form>
-                
             </div>
         </header>
 
     </div>
     <div class="container d-flex justify-content-center">
-
-        <main class="shadow">
+        <main class="shadow p-3">
             <div class="">
                 @foreach ($corners as $item)
                     <div class="corner shadow mb-2 mt-1" data-bs-toggle="modal" data-bs-target="#details-modal"
@@ -76,14 +91,13 @@
                         <div class="image" data-image="{{ $item->images[0]->path }}">
                             <div class="left">
                                 <div class="facilities">
-                                    <span class="facility">{{ $item->facilities->pluck('name')->implode(' | ') }}</span>
+                                    <span
+                                        class="facility">{{ $item->facilities->pluck('name')->implode(' | ') }}</span>
                                 </div>
                                 <div class="location" target="_balnk">
                                     <i class="fa-solid fa-earth"></i>
                                     @php
-                                        $cities = [
-                                            'Padang',
-                                        ];
+                                        $cities = ['Padang'];
                                         echo $cities[array_rand($cities)];
                                     @endphp
                                 </div>
@@ -94,11 +108,13 @@
                                 <div class="icons">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </div>
-                                <div class="paragraph">{{ substr($item->detail, 0, 100) }}{!! strlen($item->detail) > 100 ? '<span>...</span>' : '' !!} </div>
+                                <div class="paragraph">{{ substr($item->detail, 0, 100) }}{!! strlen($item->detail) > 100 ? '<span>...</span>' : '' !!}
+                                </div>
                             </div>
                             <p class="status"><span class="icons"><i class="fa-solid fa-clock"></i></span> Tutup pukul
                                 {{ $item->jam_tutup }}</p>
-                            <p class="harga"><span class="icons"><i class="fa-solid fa-hand-holding-dollar"></i></span> Rentang harga
+                            <p class="harga"><span class="icons"><i
+                                        class="fa-solid fa-hand-holding-dollar"></i></span> Rentang harga
                                 Rp{{ number_format($item->harga_min, 0, ',', '.') }} -
                                 Rp{{ number_format($item->harga_max, 0, ',', '.') }}
                             </p>
@@ -106,6 +122,7 @@
                     </div>
                 @endforeach
             </div>
+            {{ $corners->links() }}
         </main>
     </div>
 
