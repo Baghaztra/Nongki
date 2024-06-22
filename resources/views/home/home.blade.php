@@ -28,7 +28,7 @@
                 @foreach ($corners as $corner)
                     <div class="corner">
                         <h1 class="text-lg">{{ $corner->name }}</h1>
-                        <p class="category">{{ $corner->categories}}</p>
+                        {{ $corners }}
                     </div>
                 @endforeach
             </div>
