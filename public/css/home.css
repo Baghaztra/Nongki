@@ -70,9 +70,9 @@ header {
 main {
     width: 55%;
     margin: 0 auto;
-    border-right: 0.1px solid rgba(101, 101, 101, 0.415);
-    border-left: 0.1px solid rgba(101, 101, 101, 0.415);
-    box-shadow: 3px 0 5px rgba(101, 101, 101, 0.427);
+    /* border-right: 0.1px solid rgba(101, 101, 101, 0.415); */
+    /* border-left: 0.1px solid rgba(101, 101, 101, 0.415); */
+    /* box-shadow: 3px 0 5px rgba(101, 101, 101, 0.427); */
 }
 
 .top {
@@ -113,7 +113,8 @@ main {
 }
 
 .corner {
-    margin-top: 2rem;
+    padding: 24px;
+    border-radius: 16px;
 }
 
 .corners h2 {
