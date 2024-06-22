@@ -20,9 +20,10 @@
                     <img class="bi me-2" width="40" height="32"></img>
                     <span class="fs-4">Nongki</span>
                 </a>
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-                    <input type="search" class="form-control" placeholder="Temukan tempat nongki anda..."
-                        aria-label="Search">
+
+                <form method="GET" action="/home" class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
+                    <input type="search" class="form-control" name="q"
+                        placeholder="Temukan tempat nongki anda..." aria-label="Search">
                         <div class="row">
                             <div class="col-6 categories">
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

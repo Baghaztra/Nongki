@@ -15,11 +15,28 @@ class FECornerController extends Controller
      */
     public function index()
     {
-        $corners = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
+        // $query = $request->input('query');
+        if (request('q')) {
+            $search = request('q');
+            $data = Corner::with(['images', 'categories', 'facilities'])
+                ->where("name", "like", "%" . $search . '%')
+                ->orWhereHas('categories', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                })
+                ->whereHas('facilities', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                })
+                ->latest()
+                ->paginate(25);
+        } else {
+            $data = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
+        }
+
+        // $corners = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
         $categories = Category::latest()->get();
         $facilities = Facility::latest()->get();
 
-        return view('home.index', ['corners'=>$corners, 'categories'=>$categories, 'facilities'=>$facilities]);
+        return view('home.index', ['corners'=>$data, 'categories'=>$categories, 'facilities'=>$facilities]);
     }
 
     /**
