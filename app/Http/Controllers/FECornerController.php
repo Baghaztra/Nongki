@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Corner;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCornerRequest;
-use App\Http\Requests\UpdateCornerRequest;
 
-class CornerController extends Controller
+class FECornerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view("admin.corner.index");
+        $corners = Corner::with(['images', 'categories', 'facilities'])->latest()->paginate(25);
+        $categories = Category::latest()->get();
+
+        return view('home.home', compact('corners', 'categories'));
     }
 
     /**
@@ -29,7 +31,7 @@ class CornerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCornerRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -37,18 +39,15 @@ class CornerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Corner $corner)
+    public function show(string $id)
     {
-        return response()->json([
-            'status' => 200,
-            'data' => $corner
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Corner $corner)
+    public function edit(string $id)
     {
         //
     }
@@ -56,7 +55,7 @@ class CornerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCornerRequest $request, Corner $corner)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -64,9 +63,8 @@ class CornerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Corner $corner)
+    public function destroy(string $id)
     {
         //
     }
-
 }

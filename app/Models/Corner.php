@@ -20,7 +20,7 @@ class Corner extends Model
         return $this->belongsToMany(Category::class, 'corner_categories', 'corner_id', 'category_id');
     }
 
-    public function image()
+    public function images()
     {
         return $this->hasMany(Image::class, 'corner_id', 'id');
     }

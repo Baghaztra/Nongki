@@ -5,7 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CornerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FacilityController;
-
+use App\Http\Controllers\FECornerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +24,4 @@ Route::get('get-data-categories', [CategoryController::class, 'getGetAllData']);
 Route::get('get-data-facilities', [FacilityController::class, 'getGetAllData']);
 Route::get('get-data-users', [UserController::class, 'getGetAllData']);
 
-Route::get('/home', function () {
-    return view('home.index');
-});
+Route::get('/home', [FECornerController::class, 'index']);
