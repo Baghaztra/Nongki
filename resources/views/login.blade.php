@@ -23,11 +23,12 @@
 
         .login-container {
             background: #ffffff;
-            padding: 30px;
+            padding: 70px 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             width: 100%;
+            height: 400px;
             max-width: 400px;
             text-align: center;
             box-sizing: border-box;
@@ -117,7 +118,7 @@
         }
 
         .btn:hover {
-            background-color: #795548;
+            background-color: #442929;
             transform: translateY(-2px);
         }
     </style>

@@ -20,19 +20,6 @@
     <link href="css/style2.css" rel="stylesheet" />
 </head>
 <body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand logo-container" href="#page-top">
-                <img src="/assets/img/logo_nongki.png" alt="Nongki Logo" />
-                NONGKI
-            </a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-    <!-- Header-->
     <header class="masthead text-center text-white d-flex">
         <div class="container my-auto">
             <div class="row">
@@ -44,7 +31,7 @@
                 <hr>
                 <div class="col-lg-8 mx-auto">
                     <p class="text-faded mb-5">"Your Guide to the Best Discussion Spaces."</p>
-                    <button href="/home" type="button" class="btn btn-xl">Search</button>
+                    <a href="/home" class="btn btn-custom">Search</a>
                 </div>
             </div>
         </div>
@@ -53,43 +40,45 @@
     <footer class="bg-dark text-white py-5 footer">
         <div class="container px-4 px-lg-5">
             <div class="row">
-                <div class="col-lg-4 about-us">
+                <div class="col-lg-6 about-us">
                     <h5 class="section-title">About Us</h5>
                     <p class="section-content text-justify">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, voluptatem accusamus suscipit accusantium quidem enim laboriosam quibusdam, voluptas, cumque maiores aperiam dolorum odio dolorem nisi perspiciatis recusandae veritatis. Tempora, iure.
                     </p>
                 </div>
-                <div class="col-lg-4 contact-info">
+                <div class="col-lg-6 mr-5 contact-info">
                     <h5 class="section-title">Contact Us</h5>
-                    <p>Email: cybertechpnpofficial@gmail.com</p>
-                    <p>WhatsApp: 08956789123</p>
-                </div>
-                <div class="col-lg-4 text-center text-lg-start">
+                    <p>Email : cybertechpnpofficial@gmail.com</p>
+                    <p>Or</p>
+
+                     <div class="col-lg-4 text-center mt-3 text-lg-start">
                     <div class="social-icons mb-3" style="white-space: nowrap;">
                         <a href="https://twitter.com/yourtwitteraccount" target="_blank">
-                            <i class="fab fa-twitter" style="font-size: 50px; margin: 0 5px; color: white;"></i>
+                            <i class="fab fa-twitter" style="font-size: 30px; margin: 0 5px; color: white;"></i>
                         </a>
                         <a href="https://facebook.com/yourfacebookaccount" target="_blank">
-                            <i class="fab fa-facebook-f" style="font-size: 50px; margin: 0 5px; color: white;"></i>
+                            <i class="fab fa-facebook-f" style="font-size: 30px; margin: 0 5px; color: white;"></i>
                         </a>
                         <a href="https://youtube.com/youryoutubechannel" target="_blank">
-                            <i class="fab fa-youtube" style="font-size: 50px; margin: 0 5px; color: white;"></i>
+                            <i class="fab fa-youtube" style="font-size: 30px; margin: 0 5px; color: white;"></i>
                         </a>
                         <a href="https://instagram.com/yourinstagramaccount" target="_blank">
-                            <i class="fab fa-instagram" style="font-size: 50px; margin: 0 5px; color: white;"></i>
+                            <i class="fab fa-instagram" style="font-size: 30px; margin: 0 5px; color: white;"></i>
                         </a>
-                        <a href="https://tiktok.com/@yourtiktokaccount" target="_blank">
-                            <i class="fab fa-tiktok" style="font-size: 50px; margin: 0 5px; color: white;"></i>
+                        <a href="https://tiktok.com/yourtiktokaccount" target="_blank">
+                            <i class="fab fa-tiktok" style="font-size: 30px; margin: 0 5px; color: white;"></i>
                         </a>
-                        <a href="https://linkedin.com/in/yourlinkedinprofile" target="_blank">
-                            <i class="fab fa-linkedin" style="font-size: 50px; margin: 0 5px; color: white;"></i>
+                        <a href="https://linkedin.com/in/cybertechpnp" target="_blank">
+                            <i class="fab fa-linkedin" style="font-size: 30px; margin: 0 5px; color: white;"></i>
                         </a>
                     </div>
+                </div>
+
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col text-center">
-                    <small class="text-muted">Copy Right &copy; Pojok Diskusi 2024</small>
+                    <small class="text-muted">Copy Right &copy; Cybertech 2024</small>
                 </div>
             </div>
             <div class="row mt-2">
@@ -112,4 +101,3 @@
     <script src="js/scripts.js"></script>
 </body>
 </html>
->>>>>>> main
