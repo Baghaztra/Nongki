@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CornerFasilities>
  */
-class CornerFasilitiesFactory extends Factory
+class CornerFacilitiesFactory extends Factory
 {
     /**
      * Define the model's default state.
