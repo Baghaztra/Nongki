@@ -7,6 +7,7 @@ use App\Http\Controllers\CornerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FECornerController;
+use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,7 +29,6 @@ Route::get('get-data-users', [UserController::class, 'getAllData']);
 
 Route::get('/home', [FECornerController::class, 'index']);
 
-Route::get('/login', function () {
-    return view('login');
-});
-
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
