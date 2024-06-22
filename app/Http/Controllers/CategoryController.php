@@ -13,9 +13,17 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.categori.index');
     }
 
+    public function getGetAllData()
+    {
+        $data = Category::latest()->get();
+        return response()->json([
+            'status' => 200,
+            'data' => $data
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
