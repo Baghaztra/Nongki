@@ -37,7 +37,20 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $data = [
+            'name' => $request->name
+        ];
+
+        if (Category::create($data)) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Sussesfully add cateogries.'
+            ]);
+        }
+        return response()->json([
+            'status' => 201,
+            'message' => 'Server Error.'
+        ]);
     }
 
     /**
