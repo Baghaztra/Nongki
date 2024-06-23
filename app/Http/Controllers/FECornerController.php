@@ -15,40 +15,49 @@ class FECornerController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $query = Corner::query()
-            ->select('corners.*')
-            ->join('corner_facilities', 'corners.id', '=', 'corner_facilities.corner_id')
-            ->join('facilities', 'corner_facilities.facility_id', '=', 'facilities.id')
-            ->join('corner_categories', 'corners.id', '=', 'corner_categories.corner_id')
-            ->join('categories', 'corner_categories.category_id', '=', 'categories.id')
-            ->distinct();
+{
+    // Membuat query dasar dengan join tabel terkait
+    $query = Corner::query()
+    ->select('corners.id', 'corners.name', 'corners.location', 'corners.created_at', 'corners.updated_at', 
+             'corners.detail', 'corners.jam_buka', 'corners.jam_tutup', 'corners.hari_buka', 'corners.harga_min', 'corners.harga_max') 
+    ->join('corner_facilities', 'corners.id', '=', 'corner_facilities.corner_id')
+    ->join('facilities', 'corner_facilities.facility_id', '=', 'facilities.id')
+    ->join('corner_categories', 'corners.id', '=', 'corner_categories.corner_id')
+    ->join('categories', 'corner_categories.category_id', '=', 'categories.id')
+    ->groupBy('corners.id', 'corners.name', 'corners.location', 'corners.created_at', 'corners.updated_at', 
+              'corners.detail', 'corners.jam_buka', 'corners.jam_tutup', 'corners.hari_buka', 'corners.harga_min', 'corners.harga_max') 
+    ->distinct();
 
-        if ($request->has('q')) {
-            $search = $request->q;
-            $query->where('corners.name', 'like', '%' . $search . '%');
-        }
-
-        if ($request->has('categories')) {
-            $categories = $request->categories;
-            $query->where(function ($q) use ($categories) {
-                $q->whereIn('categories.id', $categories);
-            });
-        }
-
-        if ($request->has('facilities')) {
-            $facilities = $request->facilities;
-            $query->where(function ($q) use ($facilities) {
-                $q->whereIn('facilities.id', $facilities);
-            });
-        }
-
-        $corners = $query->latest()->paginate(10);
-        $categories = Category::latest()->get();
-        $facilities = Facility::latest()->get();
-
-        return view('home.index', compact('corners', 'categories', 'facilities'));
+    // Filter berdasarkan pencarian nama
+    if ($request->has('q')) {
+        $search = $request->q;
+        $query->where('corners.name', 'like', '%' . $search . '%');
     }
+
+    // Filter berdasarkan kategori
+    if ($request->has('categories')) {
+        $categories = $request->categories;
+        $query->whereIn('categories.id', $categories);
+    }
+
+    // Filter berdasarkan fasilitas
+    if ($request->has('facilities')) {
+        $facilities = $request->facilities;
+        $query->whereIn('facilities.id', $facilities)
+              ->havingRaw('COUNT(DISTINCT facilities.id) = ?', [count($facilities)]);
+    }
+
+    // Mendapatkan hasil query dengan paginasi
+    $corners = $query->latest()->paginate(10);
+
+    // Mendapatkan data kategori dan fasilitas terbaru
+    $categories = Category::latest()->get();
+    $facilities = Facility::latest()->get();
+
+    // Mengirim data ke view
+    return view('home.index', compact('corners', 'categories', 'facilities'));
+}
+
 
     /**
      * Show the form for creating a new resource.

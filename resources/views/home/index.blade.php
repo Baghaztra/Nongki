@@ -84,6 +84,7 @@
                     class="fa-solid fa-lightbulb"></i></button>
             <div class="">
                 @foreach ($corners as $item)
+                {{-- @dd($item) --}}
                     <div class="corner shadow mb-2 mt-1" data-bs-toggle="modal" data-bs-target="#details-modal"
                         data-name="{{ $item->name }}" data-location="{{ $item->location }}"
                         data-detail="{{ $item->detail }}" data-images="{{ $item->images }}"
@@ -136,7 +137,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="details-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-dialog  modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <strong class="modal-title fs-2" id="corner-name"></strong>

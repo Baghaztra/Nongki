@@ -109,7 +109,7 @@ class DatabaseSeeder extends Seeder
                 'corner_id' => $i,
             ]);
         }
-        Image::factory(10)->create();
+        Image::factory(500)->create();
         
         // Rekomendasi dari user
         Recomendation::factory(20)->create();
