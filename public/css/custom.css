@@ -41,3 +41,16 @@
     align-items: center;
     justify-content: center;
 }
+
+.floating {
+    position: fixed;
+    bottom: 45px;
+    right: 10%;
+    width: 40px;
+    height: 40px;
+    /* background-color: #f8f9fa; */
+    padding: 10px;
+    /* border: 1px solid #dee2e6; */
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
