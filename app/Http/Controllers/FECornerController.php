@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Facility;
+use App\Models\Recomendation;
 
 class FECornerController extends Controller
 {
@@ -52,9 +53,28 @@ class FECornerController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function sendRekomendasi(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'judul' => 'required',
+            'detail' => 'required',
+            'lokasi' => 'required',
+        ]);
+
+        Recomendation::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'title' => $request->judul,
+            'detail' => $request->detail,
+            'location' => $request->lokasi
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Terima kasih telah memberikan rekomendasi kepada kami.'
+        ]);
     }
 
     /**

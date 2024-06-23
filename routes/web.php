@@ -14,6 +14,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [FECornerController::class, 'index']);
+Route::post('/send-rekomendasi', [FECornerController::class, 'sendRekomendasi']);
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('admin/dashboard', AdminController::class);
@@ -27,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('get-data-facilities', [FacilityController::class, 'getAllData']);
     Route::get('get-data-users', [UserController::class, 'getAllData']);
 
-    
+
     Route::get('/logout', [LoginController::class, 'logout']);
 });
 
