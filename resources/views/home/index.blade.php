@@ -214,9 +214,9 @@
                         <span id="error_email" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="judul" class="form-label">Judul</label>
+                        <label for="judul" class="form-label">Rekomendasi</label>
                         <input type="text" class="form-control" name="judul" id="judul"
-                            aria-describedby="helpId" placeholder="masukkan judul" />
+                            aria-describedby="helpId" placeholder="masukkan nama tempat atau apa yang disarankan" />
                         <span id="error_judul" class="text-danger"></span>
                     </div>
                     <div class="mb-3">

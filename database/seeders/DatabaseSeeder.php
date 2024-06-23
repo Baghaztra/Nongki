@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         
-        $pojok = 10;
+        $pojok = 100;
 
         User::factory()->create([
             'name' => 'Test User',
@@ -30,39 +30,9 @@ class DatabaseSeeder extends Seeder
             'password' => '1',
         ]);
 
-        // Corner::factory($pojok)->create();
+        Corner::factory($pojok)->create();
         // Facility::factory(10)->create();
         // Category::factory(10)->create();
-        
-        // // minimal 1 fasilitas untuk tiap corner 
-        // for ($i=1; $i <= $pojok; $i++) { 
-        //     CornerFacilities::factory()->create([
-        //         'facility_id' => Facility::all()->random()->id,
-        //         'corner_id' => $i,
-        //     ]);
-        // }
-        // CornerFacilities::factory(10)->create();
-        
-        // // minimal 1 category untuk tiap corner 
-        // for ($i=1; $i <= $pojok; $i++) { 
-        //     CornerCategories::factory()->create([
-        //         'category_id' => Category::all()->random()->id,
-        //         'corner_id' => $i,
-        //     ]);
-        // }
-        // CornerCategories::factory(10)->create();
-
-        // // minimal 1 gambar untuk tiap corner 
-        // for ($i=1; $i <= $pojok; $i++) { 
-        //     Image::factory()->create([
-        //         'path' => '/images/'.['dummy1.jpg', 'dummy2.jpg', 'dummy3.jpg'][rand(0, 2)],
-        //         'corner_id' => $i,
-        //     ]);
-        // }
-        // Image::factory(10)->create();
-        
-        // Feedback dari user
-        Recomendation::factory(20)->create();
 
         Category::factory()->create([
             'name' => 'Working space',
@@ -112,5 +82,36 @@ class DatabaseSeeder extends Seeder
         Facility::factory()->create([
             'name' => 'Smooking area',
         ]);
+
+        
+        // minimal 1 fasilitas untuk tiap corner 
+        for ($i=1; $i <= $pojok; $i++) { 
+            CornerFacilities::factory()->create([
+                'facility_id' => Facility::all()->random()->id,
+                'corner_id' => $i,
+            ]);
+        }
+        CornerFacilities::factory(500)->create();
+        
+        // minimal 1 category untuk tiap corner 
+        for ($i=1; $i <= $pojok; $i++) { 
+            CornerCategories::factory()->create([
+                'category_id' => Category::all()->random()->id,
+                'corner_id' => $i,
+            ]);
+        }
+        CornerCategories::factory(100)->create();
+
+        // minimal 1 gambar untuk tiap corner 
+        for ($i=1; $i <= $pojok; $i++) { 
+            Image::factory()->create([
+                'path' => '/images/'.['dummy1.jpg', 'dummy2.jpg', 'dummy3.jpg'][rand(0, 2)],
+                'corner_id' => $i,
+            ]);
+        }
+        Image::factory(10)->create();
+        
+        // Rekomendasi dari user
+        Recomendation::factory(20)->create();
     }
 }
