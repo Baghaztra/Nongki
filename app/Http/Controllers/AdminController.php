@@ -63,7 +63,7 @@ class AdminController extends Controller
         Recomendation::where('id', $id)->update(['status' => 1]);
         return response()->json([
             'status' => 200,
-            'message' => 'TOKAY'
+            'message' => 'OKAY'
         ]);
     }
 

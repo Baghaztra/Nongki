@@ -43,13 +43,13 @@
                 <div class="col-lg-6 about-us">
                     <h5 class="section-title">About Us</h5>
                     <p class="section-content text-justify">
-                        e.
+                        Welcome to Nongki! We are a revolutionary app designed to enhance your social experience by connecting you with the best hangout spots, cafés, and workspaces around you. At Nongki, we believe in the power of community and convenience, bringing the best local spots right to your fingertips.
                     </p>
                 </div>
                 <div class="col-lg-6 mr-5 contact-info">
                     <h5 class="section-title">Contact Us</h5>
                     <p>Email : cybertechpnpofficial@gmail.com</p>
-                    <p>Or</p>
+                    <p>or</p>
 
                      <div class="col-lg-4 text-center mt-3 text-lg-start">
                     <div class="social-icons mb-3" style="white-space: nowrap;">
