@@ -7,10 +7,13 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCornerRequest;
 use App\Http\Requests\UpdateCornerRequest;
+use App\Imports\CornerImport;
 use App\Models\CornerCategories;
 use App\Models\CornerFacilities;
 use App\Models\Facility;
 use App\Models\Image;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CornerController extends Controller
 {
@@ -41,7 +44,7 @@ class CornerController extends Controller
         $corner = Corner::all();
         $facilities = Facility::all();
         $categories = Category::all();
-        return view('admin.corner.create', ['corner'=>$corner, 'facilities'=>$facilities, 'categories'=>$categories]);
+        return view('admin.corner.create', ['corner' => $corner, 'facilities' => $facilities, 'categories' => $categories]);
     }
 
     /**
@@ -83,12 +86,12 @@ class CornerController extends Controller
 
         if ($request->hasFile('gambar')) {
             $i = 0;
-            foreach($request->file('gambar') as $file) {
+            foreach ($request->file('gambar') as $file) {
                 $fileName = time() . $i . '.' . $file->getClientOriginalExtension();
                 $i++;
                 $file->move(public_path('images'), $fileName);
                 $asset = new Image();
-                $asset->path = '/images/'.$fileName;
+                $asset->path = '/images/' . $fileName;
                 $asset->corner_id = $corner->id;
                 $asset->save();
             }
@@ -112,12 +115,12 @@ class CornerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(String $id)
+    public function edit(string $id)
     {
         $corner = Corner::findOrFail($id);
         $facilities = Facility::all();
         $categories = Category::all();
-        return view('admin.corner.update', ['corner'=>$corner, 'facilities'=>$facilities, 'categories'=>$categories]);
+        return view('admin.corner.update', ['corner' => $corner, 'facilities' => $facilities, 'categories' => $categories]);
     }
 
     /**
@@ -176,7 +179,7 @@ class CornerController extends Controller
             }
         }
 
-        
+
 
         return redirect('admin/corner');
     }
@@ -197,6 +200,21 @@ class CornerController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'Successfully delete corner'
+        ]);
+    }
+
+    public function import(Request $request)
+    {
+        if ($request->hasFile('fileCorner')) {
+            Excel::import(new CornerImport, request()->file('fileCorner'));
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data corner berhasil di import.'
+            ]);
+        }
+        return response()->json([
+            'status' => 204,
+            'message' => 'Something went wrong.'
         ]);
     }
 }

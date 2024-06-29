@@ -160,10 +160,57 @@ $(document).ready(function () {
         });
     });
 
+    // import
+    $('#btnImportCorner').on('click', function () {
+        $('#modalImport').modal('show');
+    });
+
+    $('#saveImport').on('click', function () {
+        var fileInput = $('#fileCorner')[0];
+        if (fileInput.files.length === 0) {
+            alert('Please select a file');
+            return;
+        }
+        var data = new FormData();
+        data.append('fileCorner', fileInput.files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/corner/import",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                if (response.status === 200) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: response.message,
+                    });
+                    reloadTable(tableCorner);
+                    $('#modalImport').modal('hide');
+                    $('#fileCorner').val('');
+                }
+                if (response.status === 204) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Ops...!",
+                        text: response.message,
+                    });
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr)
+            }
+        });
+    });
+
     // mengambil data sesuai id
     $(document).on("click", ".btnEdit", function () {
         clearErrorMsg();
-        location.href=`/admin/corner/${$(this).data('id')}/edit`;
+        location.href = `/admin/corner/${$(this).data('id')}/edit`;
         // clearForm();
         // $(".action").text("Update");
         // $(".action").attr("id", "update");
@@ -206,8 +253,8 @@ $(document).ready(function () {
                         function (indexInArray, valueOfElement) {
                             $(
                                 "#modalAdd input[type='checkbox']input[id=f" +
-                                    valueOfElement.id +
-                                    "]"
+                                valueOfElement.id +
+                                "]"
                             ).prop("checked", true);
                         }
                     );
@@ -216,8 +263,8 @@ $(document).ready(function () {
                         function (indexInArray, valueOfElement) {
                             $(
                                 "#modalAdd input[type='checkbox']input[id=c" +
-                                    valueOfElement.id +
-                                    "]"
+                                valueOfElement.id +
+                                "]"
                             ).prop("checked", true);
                         }
                     );

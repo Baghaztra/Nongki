@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('admin/dashboard', AdminController::class);
     Route::get('get-data-recomendation', [AdminController::class, 'getAllData']);
     Route::resource('admin/corner', CornerController::class);
+    Route::post('corner/import', [CornerController::class, 'import']);
     Route::resource('admin/categories', CategoryController::class);
     Route::resource('admin/facilities', FacilityController::class);
     Route::resource('admin/users', UserController::class);
