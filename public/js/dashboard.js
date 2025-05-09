@@ -27,7 +27,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 render: function (_row, _type, item) {
-                    return `<a href="${item.location}">${item.location}</a>`;
+                    return `<a href="${item.location}" target="_blank">${item.location}</a>`;
                 }
                 , "orderable": true
             },

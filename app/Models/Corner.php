@@ -16,12 +16,12 @@ class Corner extends Model
     
     public function facilities()
     {
-        return $this->belongsToMany(Facility::class, 'corner_facilities', 'corner_id', 'facility_id');
+        return $this->belongsToMany(Facility::class, 'corner_facilities', 'corner_id', 'facility_id')->distinct();
     }
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'corner_categories', 'corner_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'corner_categories', 'corner_id', 'category_id')->distinct();
     }
 
     public function images()

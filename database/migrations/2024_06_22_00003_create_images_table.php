@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->foreignId('corner_id')->constrained('corners');
+            $table->foreignId('corner_id')->constrained('corners')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         
-        $pojok = 10;
+        $pojok = 100;
 
         User::factory()->create([
             'name' => 'Test User',
@@ -31,8 +31,58 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Corner::factory($pojok)->create();
-        Facility::factory(10)->create();
-        Category::factory(10)->create();
+        // Facility::factory(10)->create();
+        // Category::factory(10)->create();
+
+        Category::factory()->create([
+            'name' => 'Working space',
+        ]);
+        Category::factory()->create([
+            'name' => 'Cafe',
+        ]);
+        Category::factory()->create([
+            'name' => 'Taman',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Wifi',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Toilet',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Parkir',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Listrik',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Meeting room',
+        ]);
+        Facility::factory()->create([
+            'name' => 'AC',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Studio',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Ruang baca',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Ruang belajar',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Mushala',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Proyektor',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Sound system',
+        ]);
+        Facility::factory()->create([
+            'name' => 'Smooking area',
+        ]);
+
         
         // minimal 1 fasilitas untuk tiap corner 
         for ($i=1; $i <= $pojok; $i++) { 
@@ -41,7 +91,7 @@ class DatabaseSeeder extends Seeder
                 'corner_id' => $i,
             ]);
         }
-        CornerFacilities::factory(10)->create();
+        CornerFacilities::factory(500)->create();
         
         // minimal 1 category untuk tiap corner 
         for ($i=1; $i <= $pojok; $i++) { 
@@ -50,7 +100,7 @@ class DatabaseSeeder extends Seeder
                 'corner_id' => $i,
             ]);
         }
-        CornerCategories::factory(10)->create();
+        CornerCategories::factory(100)->create();
 
         // minimal 1 gambar untuk tiap corner 
         for ($i=1; $i <= $pojok; $i++) { 
@@ -59,9 +109,9 @@ class DatabaseSeeder extends Seeder
                 'corner_id' => $i,
             ]);
         }
-        Image::factory(10)->create();
+        Image::factory(500)->create();
         
-        // Feedback dari 
+        // Rekomendasi dari user
         Recomendation::factory(20)->create();
     }
 }

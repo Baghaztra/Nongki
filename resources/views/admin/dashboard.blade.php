@@ -29,7 +29,7 @@
                                 <td>Title</td>
                                 <td>Detail</td>
                                 <td>Location</td>
-                                <td>NO</td>
+                                <td>Approve</td>
                             </tr>
                         </thead>
                     </table>
